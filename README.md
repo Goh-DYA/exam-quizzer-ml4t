@@ -1,16 +1,18 @@
-# exam-quizzer
+# ML4T Exam Prep Quizzer
 
-Multi-select quizzes for ML4T (Machine Learning for Trading) exam preparation.
+Multi-select quizzes for GaTech CS7646 ML4T (Machine Learning for Trading) exam preparation.
 
 ## Features
 
-- **141 questions** across 12 topics covering the full ML4T syllabus
-- **Two question types** — Multi-select (117) and Scenario-based (24)
-- **Quiz modes** — All Topics, Random 20, Random 40, or filter By Topic
-- **Question type filter** — All Types, Multi-Select only, or Scenarios only
+- **Two exam banks** — Exam 1 (141 questions, 12 topics) and Exam 2 (119 questions, 17 topics) — swappable from the home screen
+- **260 total questions** covering the full ML4T syllabus from intro stock mechanics through reinforcement learning, deep learning, generative AI, and algorithmic bias
+- **Quiz modes** — All Questions, Random 20, Random 40, or filter By Topic
+- **Per-option scoring** — 1 point per correctly-marked option (primary metric) plus strict full-question score (secondary)
 - **Instant feedback** — per-option color coding (correct / incorrect / missed) with explanations
-- **Results dashboard** — overall score + per-topic breakdown with review mode
+- **Results dashboard** — overall option-accuracy + per-topic breakdown with review mode
 - **Mobile-friendly** — responsive design with touch-sized targets
+
+All questions & responses were generated with Claude Sonnet 4.6, taking reference from course notes & textbook material.
 
 ## Getting Started
 
@@ -29,24 +31,59 @@ npx serve .
 
 Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
-> **Note:** Opening `index.html` directly via `file://` won't work because the app uses `fetch()` to load the question bank.
+> **Note:** Opening `index.html` directly via `file://` won't work because the app uses `fetch()` to load the question banks.
 
-## Topics Covered
+## Exam 1 — Intro ML4T (141 questions)
 
-| Topic | Multi-Select | Scenarios | Total |
-|-------|--------------|-----------|-------|
-| Stock Data & Pandas | 8 | 2 | 10 |
-| Portfolio Statistics & Sharpe Ratio | 9 | 2 | 11 |
-| Market Mechanics & Order Types | 10 | 2 | 12 |
-| Hedge Funds & Fund Types | 10 | 2 | 12 |
-| Company Valuation & CAPM | 12 | 2 | 14 |
-| Technical Analysis | 10 | 2 | 12 |
-| Regression (Linear, KNN) | 10 | 2 | 12 |
-| Decision Trees | 12 | 2 | 14 |
-| Ensemble Methods | 10 | 2 | 12 |
-| Overfitting & Bias-Variance | 8 | 2 | 10 |
-| ML in Finance | 8 | 2 | 10 |
-| Projects (Martingale, Learners) | 10 | 2 | 12 |
+| Topic | Count |
+|-------|------:|
+| Stock Data & Pandas | 10 |
+| Portfolio Statistics & Sharpe Ratio | 11 |
+| Market Mechanics & Order Types | 12 |
+| Hedge Funds & Fund Types | 12 |
+| Company Valuation & CAPM | 14 |
+| Technical Analysis & Indicators | 12 |
+| Regression (Linear, KNN) | 12 |
+| Decision Trees & Construction | 14 |
+| Ensemble Methods (Bagging, Boosting, RF) | 12 |
+| Overfitting & Bias-Variance | 10 |
+| ML in Finance | 10 |
+| Projects (Martingale, Learners) | 12 |
+
+Exam 1 includes both multi-select and scenario-based question types.
+
+## Exam 2 — Advanced ML4T (119 questions)
+
+| Topic | Count |
+|-------|------:|
+| RL Fundamentals (MDPs, Policy, Value) | 10 |
+| Q-Learning | 10 |
+| Dyna-Q (Model-Based Planning) | 6 |
+| RL Applied to Trading | 6 |
+| Efficient Markets Hypothesis | 8 |
+| Grinold's Fundamental Law | 7 |
+| MVO & Efficient Frontier | 8 |
+| Market Simulator & Backtesting | 7 |
+| Time Series & TA Indicators | 8 |
+| Data Handling (Splits, Dividends, Survivor Bias) | 5 |
+| Deep Learning (NNs, CNNs, RNNs) | 10 |
+| Generative AI & Transformers | 6 |
+| Algorithmic Bias & Fairness | 6 |
+| Options & Derivatives | 7 |
+| Quantitative Practice (Kamel Interview) | 6 |
+| ML for Execution (Microstructure) | 5 |
+| AI Infrastructure in Investments | 4 |
+
+Exam 2 is graduate-level, drawing from Mitchell's RL chapter, ISLP Ch. 10 (Deep Learning), the CFA Handbook of AI and Big Data, and the ML4T course materials on reinforcement learning, efficient markets, portfolio optimization, options, and generative AI.
+
+## Scoring
+
+Each question has exactly 5 options (a–e) and 1–4 correct answers. Two scores are computed:
+
+- **Option Accuracy** (primary) — 1 point per option that the user correctly marked or correctly left unmarked, out of 5 per question
+- **Full-question correct** (secondary) — 1 point only when the user selects exactly the correct set
+
+The results screen shows both scores at the overall and per-topic level.
 
 ## Tech Stack
 
