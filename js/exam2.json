@@ -1,0 +1,4092 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "totalQuestions": 119,
+    "lastUpdated": "2026-04-26",
+    "exam": "exam2",
+    "topics": [
+      {
+        "id": "reinforcement-learning",
+        "name": "RL Fundamentals (MDPs, Policy, Value)"
+      },
+      {
+        "id": "q-learning",
+        "name": "Q-Learning"
+      },
+      {
+        "id": "dyna-q",
+        "name": "Dyna-Q (Model-Based Planning)"
+      },
+      {
+        "id": "rl-trading",
+        "name": "RL Applied to Trading"
+      },
+      {
+        "id": "emh",
+        "name": "Efficient Markets Hypothesis"
+      },
+      {
+        "id": "fundamental-law",
+        "name": "Grinold's Fundamental Law"
+      },
+      {
+        "id": "portfolio-optimization",
+        "name": "MVO & Efficient Frontier"
+      },
+      {
+        "id": "market-simulator",
+        "name": "Market Simulator & Backtesting"
+      },
+      {
+        "id": "time-series-ta",
+        "name": "Time Series & TA Indicators"
+      },
+      {
+        "id": "data-handling",
+        "name": "Data Handling (Splits, Dividends, Survivor Bias)"
+      },
+      {
+        "id": "deep-learning",
+        "name": "Deep Learning (NNs, CNNs, RNNs)"
+      },
+      {
+        "id": "generative-ai",
+        "name": "Generative AI & Transformers"
+      },
+      {
+        "id": "algorithmic-bias",
+        "name": "Algorithmic Bias & Fairness"
+      },
+      {
+        "id": "options",
+        "name": "Options & Derivatives"
+      },
+      {
+        "id": "quant-practice",
+        "name": "Quantitative Practice (Kamel Interview)"
+      },
+      {
+        "id": "ml-execution",
+        "name": "ML for Execution (Microstructure)"
+      },
+      {
+        "id": "ai-infrastructure",
+        "name": "AI Infrastructure in Investments"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": 1,
+      "topic": "reinforcement-learning",
+      "difficulty": "medium",
+      "question": "A Markov Decision Process (MDP) formalizes a reinforcement learning problem. Which of the following are components of an MDP?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A set of states S that the agent can occupy"
+        },
+        {
+          "id": "b",
+          "text": "A set of actions A available in each state"
+        },
+        {
+          "id": "c",
+          "text": "A transition function T(s, a, s') giving the probability of reaching s' from s after action a"
+        },
+        {
+          "id": "d",
+          "text": "A reward function R(s, a) giving the expected immediate reward"
+        },
+        {
+          "id": "e",
+          "text": "A labeled training set of (input, output) pairs"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "An MDP is the tuple (S, A, T, R) plus a discount factor γ. There are no labeled (input, output) pairs in RL — that is supervised learning. The agent learns from the scalar reward signal, which is indirect and potentially delayed. (a) is too strong: MDPs assume the state is a sufficient statistic but real-world agents often deal with partial observability (POMDPs). The strict guarantee of 'fully observable at all times' is not part of the formal definition."
+    },
+    {
+      "id": 2,
+      "topic": "reinforcement-learning",
+      "difficulty": "medium",
+      "question": "Consider the experience tuple (s, a, s', r) used in reinforcement learning. Which statements about it are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It captures one atomic learning event: the agent was in state s, took action a, landed in s', and received reward r"
+        },
+        {
+          "id": "b",
+          "text": "It provides the minimum information needed for one Q-learning update"
+        },
+        {
+          "id": "c",
+          "text": "The next state s' is always deterministically determined by (s, a)"
+        },
+        {
+          "id": "d",
+          "text": "The reward r may be zero for most tuples in environments with delayed reward"
+        },
+        {
+          "id": "e",
+          "text": "Experience tuples can be stored and replayed to improve sample efficiency"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "d",
+        "e"
+      ],
+      "explanation": "Experience tuples are the atomic learning unit. In stochastic environments, (s, a) induces a probability distribution over s' — it is not deterministic in general. Delayed rewards mean many tuples will have r=0 until a terminal event. Storing tuples enables experience replay. (b) is wrong — a single tuple updates Q at one point; discovering the optimal policy requires exploration across the entire state-action space."
+    },
+    {
+      "id": 3,
+      "topic": "reinforcement-learning",
+      "difficulty": "hard",
+      "question": "Concerning the discount factor γ in the discounted cumulative reward Σ γ^(i-1) · r_i, which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Setting γ near 0 produces a myopic agent that prioritizes immediate rewards"
+        },
+        {
+          "id": "b",
+          "text": "Setting γ near 1 makes the agent value distant future rewards almost as much as immediate ones"
+        },
+        {
+          "id": "c",
+          "text": "γ > 1 is commonly used to boost the importance of long-term rewards"
+        },
+        {
+          "id": "d",
+          "text": "A smaller γ can make the infinite-horizon sum converge more easily"
+        },
+        {
+          "id": "e",
+          "text": "γ = 0 makes the agent completely ignore the reward signal"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "γ ∈ [0, 1). Values > 1 are not used because they would cause the infinite sum to diverge. γ = 0 does NOT ignore rewards — it still values the immediate reward r_1 (since γ^0 = 1), but zeros every future term. Smaller γ accelerates convergence of the infinite-horizon sum."
+    },
+    {
+      "id": 4,
+      "topic": "reinforcement-learning",
+      "difficulty": "medium",
+      "question": "You are asked to distinguish between model-based and model-free reinforcement learning. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Model-based RL explicitly constructs or is given the transition function T and reward function R, then applies dynamic programming"
+        },
+        {
+          "id": "b",
+          "text": "Model-free RL derives a policy from sampled experience without explicitly learning T or R"
+        },
+        {
+          "id": "c",
+          "text": "Q-learning is a model-free algorithm"
+        },
+        {
+          "id": "d",
+          "text": "Policy iteration and value iteration are model-based algorithms"
+        },
+        {
+          "id": "e",
+          "text": "Model-free methods always converge faster than model-based methods when the model is known exactly"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Model-based uses T and R (e.g., policy/value iteration); model-free (e.g., Q-learning) learns Q directly from samples. When a perfect model is available, model-based methods like value iteration converge dramatically faster than model-free sampling methods because they can sweep the entire state space at each step. (b) is wrong: model-free RL still knows the state and action spaces — it just doesn't learn T or R explicitly."
+    },
+    {
+      "id": 5,
+      "topic": "reinforcement-learning",
+      "difficulty": "hard",
+      "question": "Consider the Bellman optimality equation: V*(s) = max_a [ R(s, a) + γ · Σ_{s'} T(s, a, s') · V*(s') ]. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "V*(s) is defined only for deterministic environments and is undefined under stochastic transitions"
+        },
+        {
+          "id": "b",
+          "text": "The equation is not recursive; each V*(s) is computed independently"
+        },
+        {
+          "id": "c",
+          "text": "The max operator captures the assumption that the agent will act optimally from state s onward"
+        },
+        {
+          "id": "d",
+          "text": "Value iteration solves this equation by iteratively applying the right-hand side until convergence"
+        },
+        {
+          "id": "e",
+          "text": "The equation only holds for deterministic environments"
+        }
+      ],
+      "correctAnswers": [
+        "c",
+        "d"
+      ],
+      "explanation": "The Bellman equation is the foundation of DP-based RL. It is general — the summation Σ_{s'} T(s, a, s') · V*(s') handles stochastic transitions; for deterministic environments, T becomes an indicator function and the sum collapses to a single term. (a) is false — V* is well-defined for stochastic MDPs via the expectation. (b) is false — the Bellman equation IS recursive."
+    },
+    {
+      "id": 6,
+      "topic": "reinforcement-learning",
+      "difficulty": "medium",
+      "question": "An RL policy π maps states to actions. Which of the following statements about policies are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A policy π always maps each state to a SET of actions with equal probability"
+        },
+        {
+          "id": "b",
+          "text": "A stochastic policy is mathematically impossible in discrete MDPs"
+        },
+        {
+          "id": "c",
+          "text": "A stochastic policy produces a probability distribution over actions per state"
+        },
+        {
+          "id": "d",
+          "text": "Every state must map to a unique optimal action — ties are disallowed"
+        },
+        {
+          "id": "e",
+          "text": "An ε-greedy policy is purely exploratory"
+        }
+      ],
+      "correctAnswers": [
+        "c"
+      ],
+      "explanation": "Ties are allowed — any action attaining the max is optimal. ε-greedy is a MIX: greedy (exploitation) with probability 1−ε and random (exploration) with probability ε; it is not purely exploratory. (a) is false — a policy can be deterministic (single action) or stochastic. (b) is false — stochastic policies are standard."
+    },
+    {
+      "id": 7,
+      "topic": "reinforcement-learning",
+      "difficulty": "hard",
+      "question": "Regarding finite-horizon vs. infinite-horizon problem formulations in RL, which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Finite-horizon and infinite-horizon problems always yield identical optimal policies"
+        },
+        {
+          "id": "b",
+          "text": "Discounting is NEVER used in finite-horizon problems"
+        },
+        {
+          "id": "c",
+          "text": "A finite-horizon problem always yields a different optimal policy than an infinite-horizon version of the same environment"
+        },
+        {
+          "id": "d",
+          "text": "Discounting is commonly used to make infinite-horizon returns mathematically well-defined"
+        },
+        {
+          "id": "e",
+          "text": "An infinite-horizon undiscounted problem is always solvable by standard value iteration"
+        }
+      ],
+      "correctAnswers": [
+        "d"
+      ],
+      "explanation": "Finite-horizon policies can be non-stationary (depend on time remaining). Infinite-horizon with γ<1 yields stationary policies. The two formulations MAY produce the same policy for some problems. Undiscounted infinite-horizon can have unbounded value — not always solvable by standard VI. (a) is false — finite-horizon policies can depend on time remaining. (b) is false — discounting is orthogonal to horizon and often applied to both."
+    },
+    {
+      "id": 8,
+      "topic": "reinforcement-learning",
+      "difficulty": "medium",
+      "question": "Which of the following are important distinctions between reinforcement learning and supervised learning?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Supervised learning provides (input, target) labels; RL provides only a scalar reward signal"
+        },
+        {
+          "id": "b",
+          "text": "RL has delayed, scalar rewards whereas supervised learning has immediate labeled targets"
+        },
+        {
+          "id": "c",
+          "text": "Supervised learning typically has i.i.d. training samples; RL samples are sequentially dependent via the environment"
+        },
+        {
+          "id": "d",
+          "text": "RL requires exploration to discover which actions yield rewards; supervised learning does not"
+        },
+        {
+          "id": "e",
+          "text": "RL is a special case of unsupervised learning because there are no target labels"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "RL is NOT a special case of unsupervised learning: the reward signal is a form of supervised feedback, just sparse and delayed. Options (a)–(d) are the canonical distinctions. (b) is false — RL receives a scalar reward, not action labels. That's precisely what distinguishes it from imitation learning."
+    },
+    {
+      "id": 9,
+      "topic": "reinforcement-learning",
+      "difficulty": "hard",
+      "question": "Consider the credit assignment problem in RL. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It asks how to distribute a delayed reward back to the earlier actions that produced it"
+        },
+        {
+          "id": "b",
+          "text": "Discounting with γ < 1 assigns exponentially smaller credit to rewards further in the future"
+        },
+        {
+          "id": "c",
+          "text": "The temporal-difference target r + γ · max_{a'} Q(s', a') implicitly back-propagates future value estimates through time"
+        },
+        {
+          "id": "d",
+          "text": "Credit assignment is trivial when rewards are received at every time step"
+        },
+        {
+          "id": "e",
+          "text": "Eligibility traces are one solution that remembers which states/actions were recently visited"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "Credit assignment is non-trivial even with dense rewards: rewards received now may be the result of long chains of decisions, and disentangling which past action mattered is still hard. (d) is too strong. (b) is wrong — γ > 1 is not used (divergence). Discounting with γ < 1 lets earlier actions receive credit via γ^k attenuation."
+    },
+    {
+      "id": 10,
+      "topic": "reinforcement-learning",
+      "difficulty": "easy",
+      "question": "The 'sense-think-act' cycle describes the basic loop of a reinforcement-learning agent. Which of the following are part of this loop?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sense: observe the current state s of the environment"
+        },
+        {
+          "id": "b",
+          "text": "Think: consult the current policy π to select an action given the current state"
+        },
+        {
+          "id": "c",
+          "text": "Act: execute a in the environment, producing s' and reward r"
+        },
+        {
+          "id": "d",
+          "text": "Learn: update internal estimates (Q-values, policy, or model) based on (s, a, s', r)"
+        },
+        {
+          "id": "e",
+          "text": "Forget: flush all prior experience before the next iteration"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Sense-think-act-learn is the full loop. Forgetting prior experience would prevent learning; experience replay and persistent Q-tables are how agents ACCUMULATE knowledge over time. (b) describes pure random behavior, not the 'think' step — which is policy evaluation."
+    },
+    {
+      "id": 11,
+      "topic": "q-learning",
+      "difficulty": "medium",
+      "question": "Given the Q-learning update rule Q'[s, a] = (1 − α) · Q[s, a] + α · (r + γ · max_{a'} Q[s', a']), which of the following statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "α is the learning rate controlling how much a new estimate overrides the existing Q-value"
+        },
+        {
+          "id": "b",
+          "text": "γ is the discount factor controlling the relative weight of future vs. immediate rewards"
+        },
+        {
+          "id": "c",
+          "text": "The target value is r + γ · max_{a'} Q[s', a'] — what Q[s, a] is being pulled toward"
+        },
+        {
+          "id": "d",
+          "text": "Setting α = 1 makes Q[s, a] equal to the one-sample target and discards all prior learning"
+        },
+        {
+          "id": "e",
+          "text": "The max over a' means Q-learning is on-policy"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Options (a)–(d) describe the update mechanics correctly. (e) is FALSE — the max operator is OFF-policy: it uses the greedy policy in the target regardless of which policy (e.g., ε-greedy) generated the experience. This is precisely what makes Q-learning off-policy. (b) confuses γ with ε. γ is the discount factor; ε is the exploration rate in ε-greedy."
+    },
+    {
+      "id": 12,
+      "topic": "q-learning",
+      "difficulty": "hard",
+      "question": "Why is Q-learning called an 'off-policy' algorithm?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It can learn the optimal Q-function while following a different (exploratory) behavior policy"
+        },
+        {
+          "id": "b",
+          "text": "The target uses max_{a'} Q[s', a'] — the greedy action — not the action the behavior policy will actually take next"
+        },
+        {
+          "id": "c",
+          "text": "Off-policy means the algorithm updates happen on a different physical machine than the agent"
+        },
+        {
+          "id": "d",
+          "text": "Off-policy learning is impossible under function approximation in all settings"
+        },
+        {
+          "id": "e",
+          "text": "Off-policy means the algorithm cannot exploit learned Q-values during training"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b"
+      ],
+      "explanation": "The defining feature of off-policy learning: the update target is decoupled from the behavior policy. (c) is wrong — there IS a behavior policy (usually ε-greedy). (e) is wrong — exploitation happens; off-policy does NOT mean no exploitation. (c) is a distractor — 'off-policy' refers to learning-target independence from behavior policy, not hardware. (d) is false — off-policy with function approx is challenging but widely used (e.g., DQN)."
+    },
+    {
+      "id": 13,
+      "topic": "q-learning",
+      "difficulty": "medium",
+      "question": "Regarding the exploration-exploitation tradeoff in Q-learning, which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Pure exploitation early in training can lock the agent into a suboptimal policy by never trying alternatives"
+        },
+        {
+          "id": "b",
+          "text": "Pure exploration never improves performance because the agent never acts greedily on what it has learned"
+        },
+        {
+          "id": "c",
+          "text": "ε-greedy with decaying ε is a standard schedule: high exploration early, high exploitation later"
+        },
+        {
+          "id": "d",
+          "text": "A small constant ε (e.g., 0.01) can suffice for stationary environments but fails when the environment changes"
+        },
+        {
+          "id": "e",
+          "text": "Q-learning converges to the optimal policy only if every state-action pair is visited infinitely often"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "c",
+        "d",
+        "e"
+      ],
+      "explanation": "(b) is false — pure exploration yields unbiased Q estimates but zero practical performance; yet even pure exploration, with enough samples, produces a correct Q-table that can then be exploited. The statement 'never improves' overstates the effect. The other options are standard results (e) is a formal convergence condition. (a) is wrong — pure exploitation early on biases toward the first action that appears good and may miss better alternatives."
+    },
+    {
+      "id": 14,
+      "topic": "q-learning",
+      "difficulty": "hard",
+      "question": "Consider tuning the learning rate α in tabular Q-learning. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A very large α (close to 1) can cause Q-values to oscillate in stochastic environments"
+        },
+        {
+          "id": "b",
+          "text": "A very small α makes learning stable but extremely slow"
+        },
+        {
+          "id": "c",
+          "text": "In stationary, deterministic environments, α = 1 is optimal because there is no noise to average out"
+        },
+        {
+          "id": "d",
+          "text": "Decaying α over time is a standard convergence trick"
+        },
+        {
+          "id": "e",
+          "text": "α must always equal γ to guarantee convergence"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "α and γ serve completely different roles and need not be equal. In deterministic environments, α = 1 instantly replaces the old estimate with the new target, which is correct because there is no noise. In stochastic environments α < 1 is needed to average out randomness. (a) is wrong — large α causes oscillation in stochastic environments and prevents convergence."
+    },
+    {
+      "id": 15,
+      "topic": "q-learning",
+      "difficulty": "medium",
+      "question": "You observe a state transition (s, a, s', r) in Q-learning with α = 0.2, γ = 0.9. Suppose Q[s, a] = 5.0, and max_{a'} Q[s', a'] = 10.0, and r = 1. What are the correct statements about the Q update?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The target is r + γ · max_{a'} Q[s', a'] = 1 + 0.9 · 10 = 10"
+        },
+        {
+          "id": "b",
+          "text": "The updated Q[s, a] = 0.8 · 5 + 0.2 · 10 = 6.0"
+        },
+        {
+          "id": "c",
+          "text": "The updated Q[s, a] = 5 + 0.2 · (10 − 5) = 6.0 (the equivalent TD-error form)"
+        },
+        {
+          "id": "d",
+          "text": "If α were 1.0, Q[s, a] would stay at its original value of 5 because the update term vanishes"
+        },
+        {
+          "id": "e",
+          "text": "If γ were 0, Q[s, a] would immediately jump to 1"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "Arithmetic (a)-(c) is correct. With α=1, Q is fully replaced with the target. (e) is wrong: with γ=0 the target is r=1 but the update is still (1−α)·5 + α·1 = 0.8·5+0.2·1 = 4.2, not 1. The target is 1, but α controls how much we move toward it. (d) is wrong — with α=1 the update fully replaces Q[s,a] with the target, not zeros the update."
+    },
+    {
+      "id": 16,
+      "topic": "q-learning",
+      "difficulty": "medium",
+      "question": "The temporal-difference (TD) error δ = r + γ · max_{a'} Q[s', a'] − Q[s, a] is central to Q-learning. Which statements about it are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "δ measures the discrepancy between the current Q estimate and the bootstrapped target"
+        },
+        {
+          "id": "b",
+          "text": "A large positive δ means the observed outcome was better than expected"
+        },
+        {
+          "id": "c",
+          "text": "A large negative δ means the observed outcome was worse than expected"
+        },
+        {
+          "id": "d",
+          "text": "Training aims to drive δ to zero across all visited (s, a) pairs"
+        },
+        {
+          "id": "e",
+          "text": "δ = 0 at every (s, a) pair implies Q equals the optimal Q*, regardless of which policy generated the data"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is too strong — δ = 0 under the BEHAVIOR policy's visit distribution means Q is fixed point of the Bellman operator under that policy's support, but if the behavior policy does not explore all (s, a) pairs, Q may not equal Q* on unexplored pairs. (a) is false — δ can be negative when the realized outcome was worse than expected."
+    },
+    {
+      "id": 17,
+      "topic": "q-learning",
+      "difficulty": "hard",
+      "question": "For Q-learning to use a tabular Q-table on a trading problem with continuous features (e.g., Bollinger Band values), discretization is required. Which statements about discretization are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Continuous values can be mapped to discrete buckets (e.g., 0–9) using percentiles of historical data"
+        },
+        {
+          "id": "b",
+          "text": "Too few buckets lose resolution; too many buckets inflate the state space and slow learning"
+        },
+        {
+          "id": "c",
+          "text": "Equal-width buckets may leave dense regions underrepresented; equal-frequency (percentile) buckets balance data per bucket"
+        },
+        {
+          "id": "d",
+          "text": "Discretization is unnecessary if the state space is continuous but the action space is discrete"
+        },
+        {
+          "id": "e",
+          "text": "A discretized state representation can harm performance if important distinctions fall within a single bucket"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "Discrete actions don't make continuous states compatible with a tabular Q; tabular requires discrete states regardless of action space. Function approximation (e.g., NNs) handles continuous states natively. (a) overstates — discretization is standard when using a tabular Q-table."
+    },
+    {
+      "id": 18,
+      "topic": "q-learning",
+      "difficulty": "medium",
+      "question": "Which of the following are sufficient conditions for tabular Q-learning to converge to Q* with probability 1?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Every state-action pair must be visited infinitely often"
+        },
+        {
+          "id": "b",
+          "text": "The learning rate α_t must satisfy Σ α_t = ∞ and Σ α_t² < ∞"
+        },
+        {
+          "id": "c",
+          "text": "The environment must be a finite, stationary MDP"
+        },
+        {
+          "id": "d",
+          "text": "The initial Q-table must be initialized to all zeros"
+        },
+        {
+          "id": "e",
+          "text": "γ must be strictly less than 1 for infinite-horizon problems"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "Initial values don't matter for convergence — any finite initialization converges under (a)–(c) and (e). The Robbins–Monro conditions on α_t ensure the stochastic approximation converges. (a) is wrong — the standard condition is 'visited infinitely often', not 'exactly once'."
+    },
+    {
+      "id": 19,
+      "topic": "q-learning",
+      "difficulty": "hard",
+      "question": "You initialize a Q-table optimistically (all Q-values set to an upper-bound estimate). What are the likely effects?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Optimistic initialization encourages the agent to try every action at least once because each starts with an inflated estimate"
+        },
+        {
+          "id": "b",
+          "text": "Optimistic initialization can partially substitute for explicit ε-greedy exploration early in training"
+        },
+        {
+          "id": "c",
+          "text": "Convergence may be slower than with a well-calibrated initialization, because the agent must 'correct' over-optimistic estimates"
+        },
+        {
+          "id": "d",
+          "text": "Optimistic initialization violates the convergence guarantees of Q-learning"
+        },
+        {
+          "id": "e",
+          "text": "This technique is most useful in stationary environments where Q-values decrease monotonically as data arrives"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "Optimistic initialization is a valid exploration strategy and does NOT break convergence — any finite initialization converges under standard conditions. In non-stationary environments, the correction pattern is less predictable. (a) overstates — it encourages exploration but does not remove the need for many episodes."
+    },
+    {
+      "id": 20,
+      "topic": "q-learning",
+      "difficulty": "medium",
+      "question": "Suppose you replace the tabular Q with a neural network Q(s, a; θ). Which statements about function-approximation Q-learning are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It can scale to continuous or very large state spaces where a table would be infeasible"
+        },
+        {
+          "id": "b",
+          "text": "It generalizes across similar states — updates to one state can affect Q-values of nearby states"
+        },
+        {
+          "id": "c",
+          "text": "Tabular Q-learning's convergence guarantees transfer without modification to neural-network Q approximation"
+        },
+        {
+          "id": "d",
+          "text": "Techniques like experience replay and target networks (DQN) help stabilize training"
+        },
+        {
+          "id": "e",
+          "text": "Function approximation eliminates the exploration/exploitation tradeoff"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "Convergence guarantees for tabular Q-learning do NOT transfer to non-linear function approximation (the deadly triad: bootstrapping + off-policy + function approximation can diverge). Exploration is still needed. DQN's innovations address the stability issues. (c) is false — the 'deadly triad' (bootstrap + off-policy + function approx) can diverge without DQN-like fixes. (e) is false — exploration is still essential."
+    },
+    {
+      "id": 21,
+      "topic": "dyna-q",
+      "difficulty": "medium",
+      "question": "Dyna-Q augments Q-learning with model-based planning. Which of the following correctly describe the Dyna-Q algorithm?",
+      "options": [
+        {
+          "id": "a",
+          "text": "After each real experience (s, a, s', r), Dyna-Q updates BOTH the Q-table AND the model"
+        },
+        {
+          "id": "b",
+          "text": "It then performs many 'hallucinated' Q-updates using simulated experiences drawn from the learned model"
+        },
+        {
+          "id": "c",
+          "text": "Hallucinated experiences can be drawn from any state-action pair, including those never visited"
+        },
+        {
+          "id": "d",
+          "text": "Typical implementations perform 100–200 hallucinations per real experience"
+        },
+        {
+          "id": "e",
+          "text": "This dramatically accelerates convergence in environments where real experience is expensive"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "d",
+        "e"
+      ],
+      "explanation": "Dyna-Q restricts hallucinations to previously visited (s, a) pairs — otherwise the model has no information to simulate from, and you'd 'drift into the abyss' with uninformed fabrications. (a) is wrong — Dyna-Q updates BOTH the Q-table AND the model on each real experience."
+    },
+    {
+      "id": 22,
+      "topic": "dyna-q",
+      "difficulty": "hard",
+      "question": "Dyna-Q maintains an empirical transition-count table T_c and derives T[s, a, s'] from it. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "T[s, a, s'] = T_c[s, a, s'] / Σ_{s''} T_c[s, a, s''] — normalize counts over possible next states"
+        },
+        {
+          "id": "b",
+          "text": "The learned model becomes more accurate as more real transitions are observed"
+        },
+        {
+          "id": "c",
+          "text": "Reward estimates are updated incrementally: R'[s, a] = (1 − α_R) · R[s, a] + α_R · r"
+        },
+        {
+          "id": "d",
+          "text": "The model must be initialized from a prior dataset — empirical counts cannot start at zero"
+        },
+        {
+          "id": "e",
+          "text": "Model accuracy directly limits the quality of hallucinated experiences"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "(d) is wrong: empirical counts can start at zero; the agent simply won't hallucinate any (s, a) it hasn't experienced yet. The model is built purely from observed data. (b) is wrong — the model improves continuously as more real data arrives."
+    },
+    {
+      "id": 23,
+      "topic": "dyna-q",
+      "difficulty": "medium",
+      "question": "Which of the following best describe why Dyna-Q accelerates learning relative to plain Q-learning?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Each real experience performs exactly one Q update and that is the ONLY update per real step"
+        },
+        {
+          "id": "b",
+          "text": "Dyna-Q requires more real experiences than Q-learning to converge"
+        },
+        {
+          "id": "c",
+          "text": "Hallucinations require no environmental interaction, so they are computationally much cheaper than real experiences"
+        },
+        {
+          "id": "d",
+          "text": "It fundamentally changes the convergence target of Q-learning"
+        },
+        {
+          "id": "e",
+          "text": "It removes the need for exploration"
+        }
+      ],
+      "correctAnswers": [
+        "c"
+      ],
+      "explanation": "Dyna-Q converges to the same Q* as plain Q-learning — it just uses data more efficiently. It does not remove the need for exploration: new (s, a) pairs must still be discovered through real interaction. (a) is false — Dyna-Q adds N hallucinated updates per real step. (b) is false — Dyna-Q uses each real experience MORE efficiently."
+    },
+    {
+      "id": 24,
+      "topic": "dyna-q",
+      "difficulty": "hard",
+      "question": "Which of the following are genuine limitations or risks of Dyna-Q?",
+      "options": [
+        {
+          "id": "a",
+          "text": "In non-stationary environments, the learned T and R become stale and hallucinations propagate obsolete information"
+        },
+        {
+          "id": "b",
+          "text": "In very high-dimensional state spaces, maintaining a count-based model T_c becomes infeasible"
+        },
+        {
+          "id": "c",
+          "text": "Poor exploration leads to a poor model, which leads to misleading hallucinations"
+        },
+        {
+          "id": "d",
+          "text": "Each hallucination requires a real environment call, so the cost savings are illusory"
+        },
+        {
+          "id": "e",
+          "text": "Hallucinations cannot teach the agent anything it could not have learned from its real experiences given infinite time"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "(d) is the exact opposite of reality — hallucinations are purely in-memory and require NO real environment interaction, which is the whole point. (e) is true philosophically: hallucinations don't add new info, they just reuse existing info more efficiently. (a) is wrong — non-stationarity makes the learned model stale and hallucinations misleading."
+    },
+    {
+      "id": 25,
+      "topic": "dyna-q",
+      "difficulty": "medium",
+      "question": "Consider a Dyna-Q agent with a stochastic environment. Which of the following are true about the hallucination step?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The next state s' is sampled from T[s, a, ·], not chosen deterministically"
+        },
+        {
+          "id": "b",
+          "text": "The reward is sampled from (or estimated by) R[s, a]"
+        },
+        {
+          "id": "c",
+          "text": "Hallucinated transitions can trigger new Q-value updates that propagate value backward along previously experienced trajectories"
+        },
+        {
+          "id": "d",
+          "text": "A very accurate model guarantees that Dyna-Q always outperforms plain Q-learning regardless of hallucination count"
+        },
+        {
+          "id": "e",
+          "text": "Zero hallucinations per real step reduces Dyna-Q to plain Q-learning"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "(d) overstates — Dyna-Q cost scales with N hallucinations per step. Too many hallucinations on a small model can be wasteful. 0 hallucinations = plain Q-learning is the exact limiting case. (a) is wrong — s' is SAMPLED from T[s,a,·], not deterministically set to the mode."
+    },
+    {
+      "id": 26,
+      "topic": "dyna-q",
+      "difficulty": "easy",
+      "question": "Which statement(s) correctly describe the relationship between Q-learning, Dyna-Q, and Dynamic Programming?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dynamic Programming assumes a known model and performs exhaustive sweeps over the state space"
+        },
+        {
+          "id": "b",
+          "text": "Q-learning is purely model-free — it samples real experience and never builds a model"
+        },
+        {
+          "id": "c",
+          "text": "Dyna-Q is a hybrid — it samples real experience AND builds a model to enable planning via simulated experience"
+        },
+        {
+          "id": "d",
+          "text": "Dyna-Q is strictly faster than dynamic programming in problems where the true model is known and fits in memory"
+        },
+        {
+          "id": "e",
+          "text": "All three approaches can converge to the same optimal Q-function"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "When the true model is known, DP sweeps are typically faster than Dyna-Q's sampled updates — Dyna-Q's advantage shines when the model must be LEARNED from samples. (a) is wrong — DP ASSUMES T and R are known; that is its defining feature."
+    },
+    {
+      "id": 27,
+      "topic": "rl-trading",
+      "difficulty": "medium",
+      "question": "You are designing an RL trading agent. Which of the following are reasonable components of the agent's STATE representation?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The current Bollinger Band %B value for the traded stock"
+        },
+        {
+          "id": "b",
+          "text": "A flag indicating whether the agent is currently long, short, or flat"
+        },
+        {
+          "id": "c",
+          "text": "The realized return since entering the current position"
+        },
+        {
+          "id": "d",
+          "text": "The current portfolio cash balance"
+        },
+        {
+          "id": "e",
+          "text": "The action the agent WILL take next"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "The action to be taken next is the OUTPUT of the policy, not the state. States are observations available at decision time. The others are all valid state components — indicators, position, and account-level info. (a) is not a useful state feature — it leaks implementation detail, not market information."
+    },
+    {
+      "id": 28,
+      "topic": "rl-trading",
+      "difficulty": "hard",
+      "question": "Regarding reward design in an RL trading agent, which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rewarding with daily return-per-share-held typically converges faster than rewarding only at exit"
+        },
+        {
+          "id": "b",
+          "text": "A 'reward only on exit' scheme imposes a harder credit-assignment problem because intermediate actions receive no feedback"
+        },
+        {
+          "id": "c",
+          "text": "Risk-adjusted rewards (e.g., incremental Sharpe contribution) discourage the agent from pursuing high-volatility bets"
+        },
+        {
+          "id": "d",
+          "text": "A poorly-designed reward can cause the agent to learn exploits (e.g., trade for commission rebates instead of profit)"
+        },
+        {
+          "id": "e",
+          "text": "Any monotonically increasing function of P&L produces the same optimal policy"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is false — non-linear transforms change relative reward magnitudes and therefore the optimal trade-off between large and small gains, even if rankings are preserved. This matters because the Q-update is linear in reward. (a) is wrong — the opposite is true: delayed-only reward makes credit assignment harder and slows convergence."
+    },
+    {
+      "id": 29,
+      "topic": "rl-trading",
+      "difficulty": "medium",
+      "question": "When training an RL trading agent, which of the following are best practices?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Train on an earlier time range and test on a later, strictly-subsequent time range"
+        },
+        {
+          "id": "b",
+          "text": "Re-train the agent multiple times on the same test set to find the best-performing run"
+        },
+        {
+          "id": "c",
+          "text": "Include realistic transaction costs (commission + market impact) during training so the policy learns to account for them"
+        },
+        {
+          "id": "d",
+          "text": "Use an adequate number of training iterations / episodes to allow Q-values to converge before evaluating"
+        },
+        {
+          "id": "e",
+          "text": "Discretize continuous indicators into a fixed, reasonably-sized bucket scheme if using a tabular Q-table"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "c",
+        "d",
+        "e"
+      ],
+      "explanation": "(b) is implicit overfitting to the test set — a cardinal sin. Each re-selection based on test performance leaks test information into the model. (a) is wrong — random shuffling violates temporal causality and creates data leakage."
+    },
+    {
+      "id": 30,
+      "topic": "rl-trading",
+      "difficulty": "hard",
+      "question": "Consider an RL agent trained on {BUY, SELL, HOLD} actions. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The 'holding' component of the state matters because legal actions depend on current position"
+        },
+        {
+          "id": "b",
+          "text": "Even if the policy receives the same indicator values on two different days, the optimal action can differ if the holding state differs"
+        },
+        {
+          "id": "c",
+          "text": "The agent can learn to trade only on directional predictions; risk management emerges automatically from Q-values"
+        },
+        {
+          "id": "d",
+          "text": "Over-trading (excessive BUY/SELL flipping) can be mitigated by including transaction costs in the reward"
+        },
+        {
+          "id": "e",
+          "text": "Reward shaping with a penalty for holding a losing position can encourage cutting losses faster"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "d",
+        "e"
+      ],
+      "explanation": "(c) is false — proper risk management requires either explicit risk-penalized rewards or state features capturing risk; it does NOT emerge automatically from pure P&L maximization. (a) is wrong — holding state matters because the legal action set and risk depend on it."
+    },
+    {
+      "id": 31,
+      "topic": "rl-trading",
+      "difficulty": "medium",
+      "question": "Which of the following are potential PITFALLS of applying Q-learning directly to financial markets?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Market non-stationarity invalidates learned Q-values over time"
+        },
+        {
+          "id": "b",
+          "text": "Low signal-to-noise ratio — a good policy is hard to distinguish from a lucky one"
+        },
+        {
+          "id": "c",
+          "text": "Limited training data — decades of daily bars may still be a tiny sample by ML standards"
+        },
+        {
+          "id": "d",
+          "text": "Backtesting look-ahead bias when state features encode information not actually available at decision time"
+        },
+        {
+          "id": "e",
+          "text": "Markets are perfectly stationary, so policies trained on 2005 data transfer directly to 2024 data"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is the opposite of reality — market non-stationarity is one of the core challenges of applying RL to finance. (a) is wrong — markets have notoriously LOW signal-to-noise ratios."
+    },
+    {
+      "id": 32,
+      "topic": "rl-trading",
+      "difficulty": "hard",
+      "question": "A trading agent's Q-table has converged. Which of the following are correct ways to USE it in production?",
+      "options": [
+        {
+          "id": "a",
+          "text": "At each timestep, the action is always a uniformly random choice rather than argmax Q"
+        },
+        {
+          "id": "b",
+          "text": "Continuing to update Q in production is ALWAYS destructive and should be avoided"
+        },
+        {
+          "id": "c",
+          "text": "Freeze the Q-table permanently to avoid drift, even if the market regime changes"
+        },
+        {
+          "id": "d",
+          "text": "Maintain a small fraction of exploration (e.g., ε = 0.02) to continue discovering new states"
+        },
+        {
+          "id": "e",
+          "text": "If a state is observed that was never seen during training, the agent is guaranteed to make a sensible decision via the Q-table"
+        }
+      ],
+      "correctAnswers": [
+        "d"
+      ],
+      "explanation": "(c) is a reasonable strategy in some contexts but rigid — it fails in non-stationary markets. (e) is false: for unseen states, tabular Q returns its initial/default values, which may be meaningless. Function approximation is needed to generalize. (a) is false — in production we exploit the learned Q-table. (b) is false — small-α online updates help adapt to mild regime drift."
+    },
+    {
+      "id": 33,
+      "topic": "emh",
+      "difficulty": "medium",
+      "question": "The Efficient Markets Hypothesis (EMH) has three forms. Which of the following statements correctly characterize the WEAK form?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Current prices reflect all information contained in past prices and volumes"
+        },
+        {
+          "id": "b",
+          "text": "Technical analysis based on historical price patterns should not produce excess returns"
+        },
+        {
+          "id": "c",
+          "text": "Fundamental analysis is also ineffective"
+        },
+        {
+          "id": "d",
+          "text": "Insider trading cannot generate excess returns"
+        },
+        {
+          "id": "e",
+          "text": "It is the most restrictive form of the hypothesis"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b"
+      ],
+      "explanation": "Weak form: only historical prices are fully reflected. Fundamental analysis and insider information could still generate excess returns under weak form. Weak form is the LEAST restrictive, not the most."
+    },
+    {
+      "id": 34,
+      "topic": "emh",
+      "difficulty": "medium",
+      "question": "The SEMI-STRONG form of EMH asserts that prices reflect all public information. Which of the following are TRUE under this form?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Technical analysis cannot produce excess returns under semi-strong EMH"
+        },
+        {
+          "id": "b",
+          "text": "Fundamental analysis of public financial statements cannot produce excess returns"
+        },
+        {
+          "id": "c",
+          "text": "Private (insider) information could theoretically still produce excess returns"
+        },
+        {
+          "id": "d",
+          "text": "Exogenous public news (e.g., an oil-price shock) is also impounded in prices immediately"
+        },
+        {
+          "id": "e",
+          "text": "Managed mutual funds consistently beating their benchmarks is trivially consistent with semi-strong EMH"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is false — consistent outperformance net of fees would be evidence AGAINST semi-strong EMH. However, SINGLE cases of outperformance can be consistent with semi-strong via survivorship/luck; consistent collective outperformance is harder to reconcile. (a) is wrong — TA uses past prices, which are public, so semi-strong EMH predicts TA fails."
+    },
+    {
+      "id": 35,
+      "topic": "emh",
+      "difficulty": "hard",
+      "question": "Consider evidence cited against the Efficient Markets Hypothesis. Which of the following are genuinely problematic for the hypothesis in its STRONG form?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Insider trading has never been documented empirically — it exists only in theory"
+        },
+        {
+          "id": "b",
+          "text": "Well-documented P/E ratio anomalies — low-P/E portfolios outperforming over 20-year horizons"
+        },
+        {
+          "id": "c",
+          "text": "The existence of Warren Buffett's long-term outperformance"
+        },
+        {
+          "id": "d",
+          "text": "Markets being open only during business hours"
+        },
+        {
+          "id": "e",
+          "text": "Hedge funds earning consistent alpha over decades"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "Trading hours have nothing to do with market efficiency claims. The other options each challenge strong-form in different ways (insider edges, anomalies, persistent outperformance, alpha generation). Strong form is the most often rejected in practice. (a) is wrong — there are many documented insider-trading cases with clear evidence of excess returns."
+    },
+    {
+      "id": 36,
+      "topic": "emh",
+      "difficulty": "medium",
+      "question": "Romero & Balch's mining-company example illustrates the speed of price adjustment. A company reports lower-than-expected gold yield. Which effects on the stock price are consistent with semi-strong EMH?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The stock price adjusts over many quarters as retail investors digest the news"
+        },
+        {
+          "id": "b",
+          "text": "Prices remain unchanged until the next formal earnings release"
+        },
+        {
+          "id": "c",
+          "text": "The adjustment happens over many weeks as the information slowly disseminates to retail investors"
+        },
+        {
+          "id": "d",
+          "text": "Informed investors selling quickly to realize the loss early drives the fast price discovery"
+        },
+        {
+          "id": "e",
+          "text": "The stock price should be unaffected until the next earnings release"
+        }
+      ],
+      "correctAnswers": [
+        "d"
+      ],
+      "explanation": "The point of the example is that informed investors' self-interest drives FAST price adjustment — (c) contradicts semi-strong EMH, and (e) is trivially false (material new info moves prices immediately, not at the next earnings release). (a) is false — fast price adjustment is the point of the EMH example. (b) is false — material news moves prices immediately."
+    },
+    {
+      "id": 37,
+      "topic": "emh",
+      "difficulty": "hard",
+      "question": "Under which EMH form(s) is technical analysis STRICTLY PREDICTED to fail at producing excess returns?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Weak form"
+        },
+        {
+          "id": "b",
+          "text": "Semi-strong form"
+        },
+        {
+          "id": "c",
+          "text": "Strong form"
+        },
+        {
+          "id": "d",
+          "text": "None — EMH says nothing about technical analysis"
+        },
+        {
+          "id": "e",
+          "text": "Only if commission costs are zero"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c"
+      ],
+      "explanation": "Technical analysis uses only historical price/volume, which is already reflected under weak form — so all three forms predict its failure. (d) and (e) are distractors."
+    },
+    {
+      "id": 38,
+      "topic": "emh",
+      "difficulty": "medium",
+      "question": "Which of the following are typically cited as core ASSUMPTIONS behind the Efficient Markets Hypothesis?",
+      "options": [
+        {
+          "id": "a",
+          "text": "All market participants must have IDENTICAL information and beliefs for EMH to hold"
+        },
+        {
+          "id": "b",
+          "text": "Zero transaction costs and zero taxes are required assumptions for EMH"
+        },
+        {
+          "id": "c",
+          "text": "Prices adjust quickly to new information"
+        },
+        {
+          "id": "d",
+          "text": "All investors have identical information and identical beliefs"
+        },
+        {
+          "id": "e",
+          "text": "There are no transaction costs or taxes"
+        }
+      ],
+      "correctAnswers": [
+        "c"
+      ],
+      "explanation": "EMH does not require (d) — heterogeneous beliefs are central to generating trades. It also does not require (e) — frictionless markets are a separate idealization, not a prerequisite for EMH. (a) is false — EMH does not require identical beliefs. (b) is false — these are separate idealizations."
+    },
+    {
+      "id": 39,
+      "topic": "emh",
+      "difficulty": "hard",
+      "question": "Consider a portfolio manager claiming a Sharpe ratio of 5.0 on a 3-year track record. Given what EMH predicts, which interpretations are reasonable?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Such a Sharpe would attract competition that compresses future returns — a key EMH prediction"
+        },
+        {
+          "id": "b",
+          "text": "Survivorship bias — we are observing only the lucky survivor from a larger population of failed managers"
+        },
+        {
+          "id": "c",
+          "text": "Unreported leverage or hidden tail risk inflating the apparent Sharpe"
+        },
+        {
+          "id": "d",
+          "text": "Backtest overfitting — the track record is in-sample or the strategy was selected after the fact"
+        },
+        {
+          "id": "e",
+          "text": "Confirmation of strong-form EMH"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "A Sharpe of 5 over 3 years is suspiciously high and suggests one of (a)–(d). It is not confirmation of EMH — quite the opposite: if EMH held, such returns would not persist. (a) is wrong — Sharpe 5 over 3 years is extremely rare and warrants scrutiny."
+    },
+    {
+      "id": 40,
+      "topic": "emh",
+      "difficulty": "easy",
+      "question": "Which of the following sources of information would require STRONG-form EMH to be inefficient for a trader to profit from?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Tomorrow's earnings announcement, leaked by a board member"
+        },
+        {
+          "id": "b",
+          "text": "An internal strategic plan not yet made public"
+        },
+        {
+          "id": "c",
+          "text": "Yesterday's closing price"
+        },
+        {
+          "id": "d",
+          "text": "The company's filed 10-K annual report"
+        },
+        {
+          "id": "e",
+          "text": "An announced merger already reported on Bloomberg"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b"
+      ],
+      "explanation": "Strong-form EMH requires even PRIVATE/insider information to be impounded in prices. (a) and (b) are non-public; (c), (d), (e) are public and are covered by semi-strong EMH."
+    },
+    {
+      "id": 41,
+      "topic": "fundamental-law",
+      "difficulty": "medium",
+      "question": "Grinold's Fundamental Law of Active Management states IR = IC × √BR. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IR always equals the Sharpe ratio of the portfolio's total returns, regardless of benchmark"
+        },
+        {
+          "id": "b",
+          "text": "IC (Information Coefficient) is the correlation between forecasted and realized excess returns"
+        },
+        {
+          "id": "c",
+          "text": "BR is a measure of AUM in dollars, not the number of forecasts"
+        },
+        {
+          "id": "d",
+          "text": "Performance scales linearly with breadth, not with its square root"
+        },
+        {
+          "id": "e",
+          "text": "IC can range from −1 to +1"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "e"
+      ],
+      "explanation": "Performance scales with √BR, not BR — doubling breadth multiplies IR by √2, not 2. This is the core insight of the law. (a) is wrong — IR uses alpha (excess over benchmark), not total return. Sharpe uses total excess over risk-free. (c) is false — breadth counts independent forecasts per year, not capital."
+    },
+    {
+      "id": 42,
+      "topic": "fundamental-law",
+      "difficulty": "hard",
+      "question": "Manager A has IC = 0.10 and makes 10 forecasts per year. Manager B has IC = 0.02 and makes 1,000 forecasts per year. Using the Fundamental Law, which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Manager A's IR equals her IC times BR (not √BR): 0.10 × 10 = 1.0"
+        },
+        {
+          "id": "b",
+          "text": "Manager B's IR = 0.02 × 1000 = 20"
+        },
+        {
+          "id": "c",
+          "text": "Manager B has higher IR despite much weaker per-forecast skill"
+        },
+        {
+          "id": "d",
+          "text": "Manager A has higher IR because IC is larger"
+        },
+        {
+          "id": "e",
+          "text": "The two managers have identical IR because skill × breadth is a linear tradeoff"
+        }
+      ],
+      "correctAnswers": [
+        "c"
+      ],
+      "explanation": "Calculations: A → 0.10 × √10 ≈ 0.316; B → 0.02 × √1000 ≈ 0.632. B has higher IR. The tradeoff is with √BR, not linear BR. (a) is false — the formula uses √BR, not BR. (b) is false — √1000 ≈ 31.6, not 1000."
+    },
+    {
+      "id": 43,
+      "topic": "fundamental-law",
+      "difficulty": "hard",
+      "question": "Warren Buffett (high IC, low breadth) and Jim Simons' Renaissance (low IC per trade, massive breadth) can achieve similar performance. Which statements correctly apply the Fundamental Law?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Fundamental Law predicts that skill (IC) scales linearly with breadth — doubling BR doubles required IC"
+        },
+        {
+          "id": "b",
+          "text": "The √ scaling means Simons needs breadth to increase quadratically to compensate for linearly smaller IC"
+        },
+        {
+          "id": "c",
+          "text": "Doubling breadth only requires a linear decrease in IC to compensate"
+        },
+        {
+          "id": "d",
+          "text": "Buffett's strategy is demonstrably superior because high IC always beats low IC"
+        },
+        {
+          "id": "e",
+          "text": "Infinite breadth would allow arbitrarily low IC to produce arbitrarily high IR, ignoring real-world constraints"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "e"
+      ],
+      "explanation": "(d) is false — the law says the two strategies are equivalent if the arithmetic works out. (e) is TRUE in the mathematical abstraction but breaks down due to liquidity limits, execution costs, and correlation between forecasts. (a) is wrong — the scaling is √BR, so doubling BR requires IC × √2 ≈ 1.41× more, not 2×. (c) is false — the scaling is √BR, so doubling BR needs IC × √2 ≈ 1.41, not 2×."
+    },
+    {
+      "id": 44,
+      "topic": "fundamental-law",
+      "difficulty": "medium",
+      "question": "Regarding the Information Coefficient (IC), which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Real-world IC values are typically in the 0.02 to 0.15 range for skilled managers"
+        },
+        {
+          "id": "b",
+          "text": "IC = +1 means perfect positive correlation between forecast and realized return"
+        },
+        {
+          "id": "c",
+          "text": "IC = −1 means the manager is systematically wrong — one could profit by inverting every forecast"
+        },
+        {
+          "id": "d",
+          "text": "Real-world IC values are typically in the 0.02 to 0.15 range for skilled managers"
+        },
+        {
+          "id": "e",
+          "text": "IC of 0.5 is routinely achieved by professional managers"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Real-world ICs above 0.1–0.2 are exceedingly rare. An IC of 0.5 would be extraordinary and unsustainable. (a) is wrong — real-world IC is typically 0.02–0.15; values >0.5 are unheard of."
+    },
+    {
+      "id": 45,
+      "topic": "fundamental-law",
+      "difficulty": "hard",
+      "question": "The Fundamental Law implicitly assumes forecasts are INDEPENDENT. Which of the following violate this assumption and therefore complicate the law's direct application?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Betting on 500 stocks that are all highly correlated within the same sector"
+        },
+        {
+          "id": "b",
+          "text": "Placing the same directional bet on the same stock 1000 times per day via a high-frequency strategy"
+        },
+        {
+          "id": "c",
+          "text": "Placing 500 truly independent bets on uncorrelated factors INCREASES breadth legitimately"
+        },
+        {
+          "id": "d",
+          "text": "A single bet scaled into using a ladder of limit orders"
+        },
+        {
+          "id": "e",
+          "text": "Betting on 500 low-correlation assets across asset classes INCREASES independence"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "(a), (b), and (d) are all effectively the same bet repeated. The law requires independent breadth; redundant forecasts do not add to BR. (c) and (e) maintain independence and appropriately add to BR. (c) is a TRUE breadth scenario — but the question asked about VIOLATIONS. Reclassify: this doesn't violate independence. (e) is a TRUE breadth scenario, not a violation."
+    },
+    {
+      "id": 46,
+      "topic": "fundamental-law",
+      "difficulty": "medium",
+      "question": "Which of the following are correct distinctions between the Information Ratio and the Sharpe Ratio?",
+      "options": [
+        {
+          "id": "a",
+          "text": "IR and Sharpe are identical in every setting; they are just different names for the same formula"
+        },
+        {
+          "id": "b",
+          "text": "IR uses tracking error in the denominator; Sharpe uses total volatility"
+        },
+        {
+          "id": "c",
+          "text": "IR is used to measure transaction-cost efficiency, not skill"
+        },
+        {
+          "id": "d",
+          "text": "Sharpe can be computed for any portfolio; IR requires a specified benchmark"
+        },
+        {
+          "id": "e",
+          "text": "IR and Sharpe are mathematically identical for any portfolio"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "IR and Sharpe coincide only in the edge case where the benchmark is the risk-free rate (and tracking error equals total vol). In general they differ meaningfully — (e) is false. (a) is wrong — they differ: IR uses alpha/tracking-error; Sharpe uses excess-return/total-vol. (c) is false — IR measures active-management skill (risk-adjusted alpha)."
+    },
+    {
+      "id": 47,
+      "topic": "fundamental-law",
+      "difficulty": "hard",
+      "question": "A fund manager claims that doubling AUM (assets under management) will double IR because more capital lets her trade more signals. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "AUM is not the same as breadth — more capital does not create new independent forecasts"
+        },
+        {
+          "id": "b",
+          "text": "Doubling AUM typically increases market impact, which degrades execution and lowers realized IC"
+        },
+        {
+          "id": "c",
+          "text": "Larger positions force the manager into less liquid names or larger trade sizes that reduce effective IC"
+        },
+        {
+          "id": "d",
+          "text": "The manager's claim correctly applies the Fundamental Law"
+        },
+        {
+          "id": "e",
+          "text": "Most alpha strategies have a capacity limit beyond which IR actually declines with more AUM"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "(d) is false — the manager confuses CAPITAL with BREADTH. More capital can even REDUCE IR because of capacity constraints. (a) is wrong — AUM does not create breadth, and more capital typically DEGRADES IC via market impact."
+    },
+    {
+      "id": 48,
+      "topic": "portfolio-optimization",
+      "difficulty": "medium",
+      "question": "Consider a two-asset portfolio with weights w_A and w_B (w_A + w_B = 1). Which formula correctly gives portfolio variance?",
+      "options": [
+        {
+          "id": "a",
+          "text": "σ_P² = w_A² · σ_A² + w_B² · σ_B² WITHOUT any covariance term"
+        },
+        {
+          "id": "b",
+          "text": "σ_P² = w_A · σ_A² + w_B · σ_B² (weighted average of individual variances)"
+        },
+        {
+          "id": "c",
+          "text": "σ_P² equals the weighted average of individual variances when ρ_{AB} = 0"
+        },
+        {
+          "id": "d",
+          "text": "σ_P² = (w_A · σ_A + w_B · σ_B)² always"
+        },
+        {
+          "id": "e",
+          "text": "Cross-terms (involving ρ_{AB}) can make σ_P LESS than either σ_A or σ_B alone"
+        }
+      ],
+      "correctAnswers": [
+        "e"
+      ],
+      "explanation": "Variance is NOT the weighted average of variances (b). Even when ρ = 0, cross-terms vanish but the formula still has squared weights in front, not linear ones — so (c) is false unless the cross-terms specifically cancel. (a), (d), (e) capture Markowitz's insight. (a) is false — the cross-covariance term cannot be omitted. (d) is false — this assumes perfect positive correlation only."
+    },
+    {
+      "id": 49,
+      "topic": "portfolio-optimization",
+      "difficulty": "hard",
+      "question": "Markowitz's insight is that portfolio risk depends on covariance, not just individual asset volatilities. Which of the following correctly illustrate the insight?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Diversification is impossible when all assets have positive expected returns"
+        },
+        {
+          "id": "b",
+          "text": "Two stocks with high individual volatility but low correlation may form a lower-volatility portfolio than a single 'safe' bond"
+        },
+        {
+          "id": "c",
+          "text": "The weighted average of expected returns is generally LESS than the portfolio's expected return"
+        },
+        {
+          "id": "d",
+          "text": "Diversification benefit is maximized with assets that have perfect negative correlation (ρ = −1)"
+        },
+        {
+          "id": "e",
+          "text": "Portfolios of perfectly correlated assets (ρ = 1) offer no diversification benefit on risk"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d",
+        "e"
+      ],
+      "explanation": "Expected portfolio return IS the weighted average — (c) is false. Variance reduction is the diversification benefit, not return reduction. The other statements are standard MVO results. (a) is wrong — diversification is about VARIANCE reduction via covariance, unrelated to return signs. (c) is false — weighted average EQUALS the portfolio's expected return."
+    },
+    {
+      "id": 50,
+      "topic": "portfolio-optimization",
+      "difficulty": "medium",
+      "question": "The efficient frontier is plotted as expected return vs. volatility. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The efficient frontier's upper curve is the set of portfolios offering maximum return for a given level of risk"
+        },
+        {
+          "id": "b",
+          "text": "The frontier's lower curve (if plotted) represents DOMINATED portfolios — same risk for lower return"
+        },
+        {
+          "id": "c",
+          "text": "Any portfolio strictly inside the frontier is suboptimal"
+        },
+        {
+          "id": "d",
+          "text": "The frontier is globally static and does not change with new return/risk estimates"
+        },
+        {
+          "id": "e",
+          "text": "A tangent line from the risk-free rate to the frontier identifies the maximum-Sharpe portfolio"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "(d) is false — the frontier shifts whenever inputs (expected returns, volatilities, covariances) are re-estimated, which is a major practical challenge of MVO. (a) is wrong — the frontier is CURVED (hyperbolic in (σ, E[r]) space) due to the square-root relationship with variance."
+    },
+    {
+      "id": 51,
+      "topic": "portfolio-optimization",
+      "difficulty": "hard",
+      "question": "Mean-Variance Optimization (MVO) takes expected returns, a covariance matrix, and a target return, and outputs optimal weights. Which statements about MVO in practice are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "MVO is robust to small perturbations in expected-return estimates"
+        },
+        {
+          "id": "b",
+          "text": "Estimated covariance matrices degrade in accuracy as the number of assets grows relative to the sample size"
+        },
+        {
+          "id": "c",
+          "text": "Classical MVO performs consistently well out-of-sample because estimation errors are small"
+        },
+        {
+          "id": "d",
+          "text": "Adding constraints (e.g., no short-selling, max weight per asset) tends to produce more stable, realistic portfolios"
+        },
+        {
+          "id": "e",
+          "text": "MVO guarantees out-of-sample outperformance relative to naive equal-weight portfolios"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is false — the DeMiguel et al. (2009) result famously showed that 1/N (equal-weight) often beats optimized MVO out of sample due to estimation error. MVO is optimal IN-SAMPLE but fragile OUT-OF-SAMPLE. (a) is wrong — MVO is NOTORIOUSLY sensitive to input perturbations. (c) is false — MVO is famously sensitive to estimation errors (DeMiguel et al.)."
+    },
+    {
+      "id": 52,
+      "topic": "portfolio-optimization",
+      "difficulty": "medium",
+      "question": "Consider three assets: ABC (σ = 15%), DEF (σ = 15%, ρ with ABC = +0.9), GHI (σ = 15%, ρ with ABC = −0.9). Which of the following 50/50 pairs produces the lowest portfolio volatility?",
+      "options": [
+        {
+          "id": "a",
+          "text": "50% ABC + 50% DEF"
+        },
+        {
+          "id": "b",
+          "text": "50% ABC + 50% GHI"
+        },
+        {
+          "id": "c",
+          "text": "The two pairs produce identical portfolio volatilities because the assets have equal individual volatility"
+        },
+        {
+          "id": "d",
+          "text": "Pair (b) because ρ = −0.9 maximizes diversification"
+        },
+        {
+          "id": "e",
+          "text": "The choice depends on expected returns, not covariance"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Volatility only depends on weights, vols, and correlations — not on expected returns. With ρ = −0.9, pair (b) has dramatically lower σ_P than pair (a) which has ρ = +0.9."
+    },
+    {
+      "id": 53,
+      "topic": "portfolio-optimization",
+      "difficulty": "hard",
+      "question": "The maximum-Sharpe portfolio (tangency portfolio) lies at the tangent between a line from the risk-free rate and the efficient frontier. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The tangency portfolio has the LOWEST Sharpe ratio among feasible portfolios"
+        },
+        {
+          "id": "b",
+          "text": "Under CAPM, the tangency portfolio is the RISK-FREE asset itself"
+        },
+        {
+          "id": "c",
+          "text": "Combining the tangency portfolio with the risk-free asset traces the Capital Market Line (CML)"
+        },
+        {
+          "id": "d",
+          "text": "Every point on the CML dominates the corresponding point (same risk) on the efficient frontier"
+        },
+        {
+          "id": "e",
+          "text": "The tangency portfolio is always the minimum-variance portfolio"
+        }
+      ],
+      "correctAnswers": [
+        "c",
+        "d"
+      ],
+      "explanation": "The tangency and min-variance portfolios are typically DIFFERENT points on the frontier. Min-variance lies at the leftmost tip; tangency lies further up-right where the tangent line touches. (a) is false — it has the HIGHEST Sharpe. (b) is false — under CAPM the tangency portfolio is the MARKET portfolio."
+    },
+    {
+      "id": 54,
+      "topic": "portfolio-optimization",
+      "difficulty": "easy",
+      "question": "The two-fund separation theorem states that every efficient portfolio can be constructed as a combination of the risk-free asset and the tangency portfolio. Which implications are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "All investors must hold different risky portfolios depending on their risk preferences"
+        },
+        {
+          "id": "b",
+          "text": "Risk-free lending/borrowing at a common rate is NOT required for the theorem"
+        },
+        {
+          "id": "c",
+          "text": "More risk-averse investors lend at the risk-free rate; less risk-averse investors borrow to leverage into the tangency portfolio"
+        },
+        {
+          "id": "d",
+          "text": "This theorem requires that short-selling be disallowed"
+        },
+        {
+          "id": "e",
+          "text": "It is a building block of the Capital Asset Pricing Model"
+        }
+      ],
+      "correctAnswers": [
+        "c",
+        "e"
+      ],
+      "explanation": "The two-fund theorem actually REQUIRES the ability to take positive and negative positions, and borrowing/lending at the risk-free rate — (d) is wrong. (a) is false — two-fund separation says all hold the same risky portfolio. (b) is false — it IS required for the theorem to hold."
+    },
+    {
+      "id": 55,
+      "topic": "portfolio-optimization",
+      "difficulty": "medium",
+      "question": "Which of the following are practical limitations of classical MVO?",
+      "options": [
+        {
+          "id": "a",
+          "text": "MVO always models fat tails and skewness correctly"
+        },
+        {
+          "id": "b",
+          "text": "Treats volatility as the only risk measure — ignores downside risk and skewness"
+        },
+        {
+          "id": "c",
+          "text": "MVO properly captures higher-moment risks like skewness and kurtosis"
+        },
+        {
+          "id": "d",
+          "text": "Assumes a static one-period horizon — ignores dynamic portfolio decisions"
+        },
+        {
+          "id": "e",
+          "text": "Performs beautifully in practice because estimation errors are small"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Estimation errors are in fact LARGE, especially for expected returns — famously, 'errors in inputs of 10% can produce errors in outputs of 100%' (Michaud, 1989). (e) is the opposite of reality. (a) is wrong — classical MVO assumes normality and ignores higher moments. (c) is false — classical MVO ignores higher moments."
+    },
+    {
+      "id": 56,
+      "topic": "market-simulator",
+      "difficulty": "medium",
+      "question": "A market simulator processes a list of orders into a portfolio value time series. Which of the following are CORE input components?",
+      "options": [
+        {
+          "id": "a",
+          "text": "An orders file specifying only the Symbol but no Date or Quantity"
+        },
+        {
+          "id": "b",
+          "text": "Starting cash balance"
+        },
+        {
+          "id": "c",
+          "text": "Commission costs must be negligible to run a valid simulator"
+        },
+        {
+          "id": "d",
+          "text": "Market-impact cost (e.g., 0.5% of trade value)"
+        },
+        {
+          "id": "e",
+          "text": "The true future realized returns of each stock"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "A simulator uses historical prices — it does not need 'future returns' as inputs. Inputs are orders, starting cash, and cost parameters. (a) is wrong — a valid orders file must include Date, Symbol, Action, and Quantity. (c) is false — commissions should be INCLUDED to model realism."
+    },
+    {
+      "id": 57,
+      "topic": "market-simulator",
+      "difficulty": "hard",
+      "question": "The standard vectorized market-simulator approach uses four DataFrames. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Prices DataFrame: must exclude dividend-paying stocks to avoid confusion"
+        },
+        {
+          "id": "b",
+          "text": "Trades: the daily change in share holdings per symbol (only non-zero on days with orders)"
+        },
+        {
+          "id": "c",
+          "text": "Holdings: cumulative sum of the Trades DataFrame — the portfolio composition at end-of-day"
+        },
+        {
+          "id": "d",
+          "text": "Values: element-wise product of Holdings and Prices, summed across columns to get daily portfolio value"
+        },
+        {
+          "id": "e",
+          "text": "Cash column in Prices varies over time based on interest rates"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "The cash column in Prices is a constant 1.0 — cash does not appreciate in the basic simulator. Interest-bearing cash can be modeled separately but is not the default. (a) is wrong — Prices includes all tradeable symbols (dividend-paying or not) with adjusted close."
+    },
+    {
+      "id": 58,
+      "topic": "market-simulator",
+      "difficulty": "medium",
+      "question": "Which statements about commission and market impact in a backtest are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Commission applies to BOTH buys and sells — cash is reduced on each side"
+        },
+        {
+          "id": "b",
+          "text": "Market impact is typically modeled as a percentage of the trade's dollar value"
+        },
+        {
+          "id": "c",
+          "text": "For buys, impact makes the effective price higher than the quoted price"
+        },
+        {
+          "id": "d",
+          "text": "For sells, impact makes the effective proceeds lower than the quoted price"
+        },
+        {
+          "id": "e",
+          "text": "Ignoring commission and impact in backtests is safe because they cancel out over many trades"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Ignoring frictions is a common and dangerous backtesting error — they compound strictly unfavorably and can turn a profitable-looking strategy negative. (a) is wrong — commissions apply to both sides of a trade."
+    },
+    {
+      "id": 59,
+      "topic": "market-simulator",
+      "difficulty": "hard",
+      "question": "Consider a strategy that shows a 15% annual return in a zero-cost backtest but a −2% annual return once realistic frictions are applied. Which interpretations are sensible?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The strategy is actually MORE profitable once frictions are applied because they reduce taxes"
+        },
+        {
+          "id": "b",
+          "text": "The edge per trade is smaller than the round-trip cost"
+        },
+        {
+          "id": "c",
+          "text": "Market impact improves with higher turnover"
+        },
+        {
+          "id": "d",
+          "text": "The frictions are cosmetic and can be safely ignored for paper trading"
+        },
+        {
+          "id": "e",
+          "text": "A reasonable next step is to add transaction costs to the training objective or the reward function"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "e"
+      ],
+      "explanation": "(d) is absolutely wrong — the frictions indicate the strategy is not economically viable. Paper trading without realistic costs will produce optimistic estimates that do not survive in live execution. (a) is wrong — transaction costs never improve profitability. (c) is false — impact gets worse with larger, faster trading."
+    },
+    {
+      "id": 60,
+      "topic": "market-simulator",
+      "difficulty": "medium",
+      "question": "Leverage emerges in a market simulator when certain conditions hold. Which conditions indicate leveraged positions?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cash balance remaining positive always implies leverage"
+        },
+        {
+          "id": "b",
+          "text": "Leverage is defined solely by number of positions held"
+        },
+        {
+          "id": "c",
+          "text": "The portfolio holds short positions (negative share counts)"
+        },
+        {
+          "id": "d",
+          "text": "The portfolio holds any positions at all"
+        },
+        {
+          "id": "e",
+          "text": "Total portfolio value is negative"
+        }
+      ],
+      "correctAnswers": [
+        "c"
+      ],
+      "explanation": "(d) is trivially true (holding any position is not leverage by itself). (e) indicates insolvency, not leverage — leverage can exist well before negative equity. (a) is false — positive cash implies no borrowing. (b) is false — leverage depends on gross vs. net exposure, not count."
+    },
+    {
+      "id": 61,
+      "topic": "market-simulator",
+      "difficulty": "hard",
+      "question": "You notice that a vectorized simulator produces different results than a naive loop-based simulator for the same orders. What are plausible causes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vectorized code produces bit-identical results to loops in all cases — discrepancies indicate sabotage"
+        },
+        {
+          "id": "b",
+          "text": "The vectorized version computes holdings via cumsum, but the loop version has an off-by-one error"
+        },
+        {
+          "id": "c",
+          "text": "Loops and vectorized code must differ on ALL orders, otherwise one is broken"
+        },
+        {
+          "id": "d",
+          "text": "Float-point rounding differs between a Python loop (Python floats) and NumPy vectorization"
+        },
+        {
+          "id": "e",
+          "text": "The vectorized approach cannot handle multiple orders on the same day correctly"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is false — vectorized code aggregates same-day orders via group-by or sum operations, which is actually cleaner than looping. The real issues are usually off-by-one indexing or date-alignment bugs. (a) is wrong — floating-point differences and subtle indexing bugs commonly cause small discrepancies. (c) is false — they should match on correct implementations; differences indicate bugs."
+    },
+    {
+      "id": 62,
+      "topic": "market-simulator",
+      "difficulty": "medium",
+      "question": "Which performance metrics are typically computed from a market simulator's output time series?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Portfolio volatility measured on data AFTER the backtest ends"
+        },
+        {
+          "id": "b",
+          "text": "Daily return: (value_t / value_{t-1}) − 1"
+        },
+        {
+          "id": "c",
+          "text": "Sharpe ratio is computed without annualization"
+        },
+        {
+          "id": "d",
+          "text": "Maximum drawdown: the largest peak-to-trough decline"
+        },
+        {
+          "id": "e",
+          "text": "Final volatility measured over the FUTURE period (after the backtest ends)"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Metrics are computed over the backtest period, not future periods. (e) is a category error. (a) is wrong — metrics are computed from the backtest output, not future data. (c) is false — Sharpe is typically annualized via √252 for daily data."
+    },
+    {
+      "id": 63,
+      "topic": "time-series-ta",
+      "difficulty": "medium",
+      "question": "Bollinger Bands are constructed from a moving average and standard deviation. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Upper band = SMA_n + 2·σ_n"
+        },
+        {
+          "id": "b",
+          "text": "Lower band = SMA_n − 2 · σ_n"
+        },
+        {
+          "id": "c",
+          "text": "BB% = (Price − Lower) / (Upper − Lower)"
+        },
+        {
+          "id": "d",
+          "text": "A price touching the upper band is traditionally interpreted as overbought"
+        },
+        {
+          "id": "e",
+          "text": "Bollinger Bands guarantee a reversal whenever price breaches them"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "No technical indicator GUARANTEES a reversal — (e) is false. Breaches can continue for extended periods. BBs identify tendencies, not certainties. (a) is wrong — upper and lower are swapped."
+    },
+    {
+      "id": 64,
+      "topic": "time-series-ta",
+      "difficulty": "hard",
+      "question": "The Relative Strength Index (RSI) is computed from average gains and losses. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "RS = average gain / average loss"
+        },
+        {
+          "id": "b",
+          "text": "RSI = 100 − 100 / (1 + RS), ranging 0–100"
+        },
+        {
+          "id": "c",
+          "text": "RSI > 70 is traditionally labeled overbought; RSI < 30 is oversold"
+        },
+        {
+          "id": "d",
+          "text": "When average loss = 0, RS is undefined — implementations typically set RSI = 100 in that case"
+        },
+        {
+          "id": "e",
+          "text": "RSI is a trend-following indicator, not a mean-reverting one"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "RSI is a mean-reversion (oscillator) indicator, not trend-following. It was designed by Wilder to identify extremes likely to reverse. (a) is wrong — RS is average gain over average loss, in that order."
+    },
+    {
+      "id": 65,
+      "topic": "time-series-ta",
+      "difficulty": "hard",
+      "question": "You are evaluating a trading strategy. Which of the following are backtesting PITFALLS that can produce inflated performance metrics?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Using random k-fold cross-validation on time-series data"
+        },
+        {
+          "id": "b",
+          "text": "Including stocks that have survived to the present day in historical backtests (survivor bias)"
+        },
+        {
+          "id": "c",
+          "text": "Repeatedly tweaking hyperparameters on the same test period"
+        },
+        {
+          "id": "d",
+          "text": "Ensuring training data strictly PRECEDES test data in time"
+        },
+        {
+          "id": "e",
+          "text": "Computing a state feature using the same-day close to make a trading decision that executes at that close"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "Point-in-time data is the CORRECT practice, not a pitfall. The others — random k-fold (violates causality), survivor bias (~13% inflation), iterative tweaking (implicit overfitting), and same-close feature-trade (look-ahead bias) — all inflate backtest results. (d) is a BEST practice, not a pitfall. Pitfalls inflate results; best practices reduce inflation."
+    },
+    {
+      "id": 66,
+      "topic": "time-series-ta",
+      "difficulty": "medium",
+      "question": "The cumsum trick replaces a naive rolling-sum loop with a single O(n) operation. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "RollingSum_t(n) = CumSum_{t-n} − CumSum_t (subtract in reverse)"
+        },
+        {
+          "id": "b",
+          "text": "This eliminates an inner loop over the window, yielding large speedups (often 1000×)"
+        },
+        {
+          "id": "c",
+          "text": "The cumsum trick is APPROXIMATE — it introduces rounding noise by design"
+        },
+        {
+          "id": "d",
+          "text": "It is subject to floating-point precision loss when the cumulative sum grows very large"
+        },
+        {
+          "id": "e",
+          "text": "It cannot be used to compute moving averages"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Moving average = rolling sum / n, so (e) is false. (d) is a real concern with long sums and many small additions, though usually negligible for financial-data scales. (a) is wrong — the correct form is CumSum_t − CumSum_{t-n}; reversing changes the sign. (c) is false — the cumsum trick is mathematically exact (modulo float precision)."
+    },
+    {
+      "id": 67,
+      "topic": "time-series-ta",
+      "difficulty": "hard",
+      "question": "Survivor bias in equity backtests. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Using current index membership to test historical periods is the MOST rigorous approach because it guarantees high data quality"
+        },
+        {
+          "id": "b",
+          "text": "This bias typically inflates historical returns because failed companies (which would have hurt returns) are excluded"
+        },
+        {
+          "id": "c",
+          "text": "Survivor bias typically DEFLATES backtested returns because survivors have lower historical vol"
+        },
+        {
+          "id": "d",
+          "text": "Using historical point-in-time index membership eliminates this bias"
+        },
+        {
+          "id": "e",
+          "text": "Survivor bias is a minor concern easily dismissed"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Survivor bias is a MAJOR concern — 13% inflation is not minor. It is a primary reason naive backtests look better than they are. (a) is wrong — using current membership ON historical data IS the survivor-bias mistake. (c) is false — survivor bias INFLATES returns by excluding failed companies."
+    },
+    {
+      "id": 68,
+      "topic": "time-series-ta",
+      "difficulty": "medium",
+      "question": "Regarding time-series cross-validation, which of the following schemes are VALID?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Rolling (walk-forward) validation: train on days 1..N, test on N+1..N+K, slide the window"
+        },
+        {
+          "id": "b",
+          "text": "Expanding window: train on days 1..N, test on N+1..N+K; then train on 1..N+K, test on N+K+1..; etc."
+        },
+        {
+          "id": "c",
+          "text": "Random k-fold on shuffled days"
+        },
+        {
+          "id": "d",
+          "text": "Leave-one-out by randomly shuffling individual days"
+        },
+        {
+          "id": "e",
+          "text": "Train on days 1..N and test on days 1..N (same dataset)"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b"
+      ],
+      "explanation": "(c) and (d) violate temporal causality by allowing future info to leak into training. (e) is in-sample testing, not cross-validation — it is guaranteed to overfit. Only (a) and (b) respect time ordering."
+    },
+    {
+      "id": 69,
+      "topic": "time-series-ta",
+      "difficulty": "hard",
+      "question": "A reported strategy shows a Sharpe ratio of 7 over 5 years of daily returns. Which statements are reasonable reactions?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A Sharpe of 7 would be historically unprecedented for a multi-year strategy"
+        },
+        {
+          "id": "b",
+          "text": "The strategy is almost certainly overfit, leveraging a backtesting flaw, or has hidden risks"
+        },
+        {
+          "id": "c",
+          "text": "Demand the author provide the orders file and methodology for an independent replication"
+        },
+        {
+          "id": "d",
+          "text": "Check whether survivor bias, look-ahead, or iterative tuning contaminated the backtest"
+        },
+        {
+          "id": "e",
+          "text": "Such a Sharpe is common for well-designed quantitative strategies"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Sharpe of 7 is astronomical — even Renaissance Medallion is rumored to be in the 2–4 range on net returns. (e) is deeply wrong."
+    },
+    {
+      "id": 70,
+      "topic": "time-series-ta",
+      "difficulty": "medium",
+      "question": "Suppose an indicator fires a trading signal at today's close. Which execution assumptions are REALISTIC?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Execute at tomorrow's open (realistic; next available price after close)"
+        },
+        {
+          "id": "b",
+          "text": "Execute at today's close (requires the trader to have known the signal before close — look-ahead)"
+        },
+        {
+          "id": "c",
+          "text": "Execute at the average of tomorrow's OHLC (realistic only if simulating VWAP-like executions)"
+        },
+        {
+          "id": "d",
+          "text": "Execute at the LOW of tomorrow (cherry-picking — no real trader gets the daily low)"
+        },
+        {
+          "id": "e",
+          "text": "Execute at the HIGH of tomorrow for sells (cherry-picking)"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "c"
+      ],
+      "explanation": "(b) is look-ahead; (d) and (e) are bucket examples of cherry-picked fills that no live execution could achieve consistently. Tomorrow's open or volume-weighted realistic fills are the honest defaults."
+    },
+    {
+      "id": 71,
+      "topic": "data-handling",
+      "difficulty": "medium",
+      "question": "Regarding stock splits and adjusted close prices, which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A 2:1 split halves each subsequent share's price while doubling share count"
+        },
+        {
+          "id": "b",
+          "text": "For backtesting, historical prices before the split are retroactively divided by the split ratio so the time series is continuous"
+        },
+        {
+          "id": "c",
+          "text": "The unadjusted close on the day of a 2:1 split would appear to drop by 50% — a meaningless 'price change'"
+        },
+        {
+          "id": "d",
+          "text": "Multiple splits compound: a 4:1 followed later by a 2:1 effectively divides pre-first-split prices by 8"
+        },
+        {
+          "id": "e",
+          "text": "Adjusted close prices are INVARIANT across time — once computed, they never change"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is false: adjusted close is PATH-DEPENDENT — as new splits/dividends occur, historical adjusted values shift. The same calendar date will have different adjusted close values depending on when you pull the data. (a) is wrong — 2:1 HALVES the price and DOUBLES the count."
+    },
+    {
+      "id": 72,
+      "topic": "data-handling",
+      "difficulty": "hard",
+      "question": "Dividend adjustments to historical prices. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dividends have no impact on the stock price on the ex-dividend date"
+        },
+        {
+          "id": "b",
+          "text": "Adjusted close retroactively reduces pre-dividend prices by the proportional dividend amount"
+        },
+        {
+          "id": "c",
+          "text": "A $1 dividend on a $100 stock adjusts pre-dividend prices down by 10%"
+        },
+        {
+          "id": "d",
+          "text": "Ignoring dividend adjustments causes backtests to understate the true total return of dividend-paying stocks"
+        },
+        {
+          "id": "e",
+          "text": "Dividends are a form of investor loss because the share price drops"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Dividends are NOT a loss to investors — they are cash paid out. The share-price drop is offset by the cash received. Total return includes both price changes and dividends. (a) is wrong — the stock typically drops by approximately the dividend amount on ex-div date. (c) is false — the adjustment is proportional: $1/$100 = 1%, not 10%."
+    },
+    {
+      "id": 73,
+      "topic": "data-handling",
+      "difficulty": "medium",
+      "question": "A stock has the following sequence: 2020 4:1 split, 2022 2:1 split. When computing TODAY's adjusted close for a 2019 date, which multipliers apply?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Only the FIRST split affects 2019 prices; later splits are ignored"
+        },
+        {
+          "id": "b",
+          "text": "2019 prices are multiplied (not divided) by the cumulative factor"
+        },
+        {
+          "id": "c",
+          "text": "A 2019 price is divided by a cumulative factor of 8"
+        },
+        {
+          "id": "d",
+          "text": "A 2019 price is divided by 4 only — only the first split matters"
+        },
+        {
+          "id": "e",
+          "text": "A 2021 price is divided by 2 (only the post-first-split second split affects it)"
+        }
+      ],
+      "correctAnswers": [
+        "c",
+        "e"
+      ],
+      "explanation": "Splits compound backward in time. 2019 prices see both splits: ÷4 × ÷2 = ÷8. 2021 prices see only the 2022 split (÷2). (d) is wrong because it ignores the compounding. (a) is false — all splits compound backward through the pre-split history. (b) is false — you DIVIDE historical prices by cumulative split ratio."
+    },
+    {
+      "id": 74,
+      "topic": "data-handling",
+      "difficulty": "medium",
+      "question": "Tick data, OHLCV bars, and aggregation. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A tick is an aggregated OHLCV bar for one minute of trading"
+        },
+        {
+          "id": "b",
+          "text": "A daily OHLCV bar aggregates all ticks within that day into Open, High, Low, Close, and Volume"
+        },
+        {
+          "id": "c",
+          "text": "In OHLCV, the Close must always equal either the High or the Low of the session"
+        },
+        {
+          "id": "d",
+          "text": "Volume represents the number of trades executed, not the number of shares"
+        },
+        {
+          "id": "e",
+          "text": "Multiple exchanges may report different prices for the same stock at the same instant"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "e"
+      ],
+      "explanation": "Volume is the total number of SHARES traded, not the number of trades. Otherwise the statements are standard. (a) is wrong — a tick is a SINGLE transaction; OHLCV is the aggregate. (c) is false — Close is the LAST trade price, which typically lies strictly between High and Low."
+    },
+    {
+      "id": 75,
+      "topic": "data-handling",
+      "difficulty": "hard",
+      "question": "When handling missing values in a price time series, which best practices apply?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Forward-fill missing days in the MIDDLE of a range using the last-known price"
+        },
+        {
+          "id": "b",
+          "text": "Backward-fill missing days at the BEGINNING using future prices is considered a lookahead-free technique"
+        },
+        {
+          "id": "c",
+          "text": "Backward-fill BEFORE forward-fill to ensure future prices are used first"
+        },
+        {
+          "id": "d",
+          "text": "Linear interpolation between two known prices is generally SAFER than forward-fill for equity prices"
+        },
+        {
+          "id": "e",
+          "text": "Simply dropping all rows with any NaN is usually acceptable because inner joins are robust"
+        }
+      ],
+      "correctAnswers": [
+        "a"
+      ],
+      "explanation": "Linear interpolation uses future information (the next known price) to fill current NaNs — this is look-ahead bias. Dropping rows via inner join can discard legitimate trading days where one stock had data but others didn't, distorting the analysis. (b) is false — using future prices is lookahead by definition; the correct use of bfill is for pre-IPO gaps where the 'future' is the first known price. (c) is false — the correct order is FORWARD FIRST, then backward, to avoid lookahead."
+    },
+    {
+      "id": 76,
+      "topic": "deep-learning",
+      "difficulty": "medium",
+      "question": "Regarding activation functions in neural networks, which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sigmoid: g(z) = 1 / (1 + e^{−z}); ranges 0 to 1"
+        },
+        {
+          "id": "b",
+          "text": "ReLU: g(z) = max(0, z); the modern default for hidden layers"
+        },
+        {
+          "id": "c",
+          "text": "Softmax: converts a vector of logits to a probability distribution; used in multi-class output layers"
+        },
+        {
+          "id": "d",
+          "text": "Sigmoid suffers from vanishing gradients for very large |z|"
+        },
+        {
+          "id": "e",
+          "text": "ReLU is strictly preferred over sigmoid because it is differentiable everywhere, including at z = 0"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(a)–(d) are standard correct statements. (e) is false in the specific claim: ReLU is NOT differentiable at z = 0 (it has a kink). In practice implementations just define the subgradient as 0 or 1 at that point, but it is a non-differentiable function strictly speaking. ReLU is preferred for other reasons (no saturation for z > 0, computational efficiency), not because of differentiability."
+    },
+    {
+      "id": 77,
+      "topic": "deep-learning",
+      "difficulty": "medium",
+      "question": "A feed-forward neural network with a single hidden layer has the form f(X) = β_0 + Σ_k β_k · g(w_{k0} + Σ_j w_{kj} · X_j). Which statements about this architecture are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The w terms are fixed hyperparameters chosen by the user before training"
+        },
+        {
+          "id": "b",
+          "text": "The β terms are the output-layer weights combining hidden activations linearly"
+        },
+        {
+          "id": "c",
+          "text": "g(·) must be linear for the network to be trainable with gradient descent"
+        },
+        {
+          "id": "d",
+          "text": "Without g(·), the model collapses to linear regression"
+        },
+        {
+          "id": "e",
+          "text": "Deep networks (many layers) with ReLU activation are strictly less expressive than a wide single-hidden-layer network"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is false: deeper networks can represent some functions more EFFICIENTLY (fewer parameters) than wide shallow networks. Universal approximation says a single wide layer CAN approximate any function, but deep networks often do so with far fewer parameters. (a) is wrong — hidden-layer weights w are LEARNED from data, not fixed. (c) is false — linear g makes the whole network linear; nonlinearity is the point."
+    },
+    {
+      "id": 78,
+      "topic": "deep-learning",
+      "difficulty": "hard",
+      "question": "Dropout is a regularization technique. Which statements about dropout are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "During training, each hidden unit is zeroed independently with probability p, per mini-batch"
+        },
+        {
+          "id": "b",
+          "text": "During training, each hidden unit's OUTPUT must be scaled by 1/(1−p) so expected activations match at test time (inverted dropout)"
+        },
+        {
+          "id": "c",
+          "text": "At test time, no units are dropped; the full network is used"
+        },
+        {
+          "id": "d",
+          "text": "Dropout approximates an ensemble average over many sub-networks"
+        },
+        {
+          "id": "e",
+          "text": "Dropout increases the risk of overfitting"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Dropout is a REGULARIZER — it DECREASES overfitting, not increases it. The other statements describe the standard algorithm correctly. (a) is wrong — dropout zeros units independently with probability p, not all at once."
+    },
+    {
+      "id": 79,
+      "topic": "deep-learning",
+      "difficulty": "medium",
+      "question": "Regarding loss functions for neural networks, which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Squared-error loss is ideal for multi-class classification with probability outputs"
+        },
+        {
+          "id": "b",
+          "text": "Cross-entropy loss −Σ Σ y_{im} · log f_m(x_i) is standard for multi-class classification"
+        },
+        {
+          "id": "c",
+          "text": "Cross-entropy is equivalent to negative log-likelihood under a categorical output model"
+        },
+        {
+          "id": "d",
+          "text": "Cross-entropy pairs naturally with softmax output because the gradient simplifies nicely"
+        },
+        {
+          "id": "e",
+          "text": "Squared-error loss should be used for multi-class classification because it handles probabilities as numbers"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Squared-error on classification probabilities suffers from saturation (the gradient can vanish) and does not correspond to a principled probabilistic model. Cross-entropy is the standard choice. (a) is wrong — cross-entropy is the standard choice for classification; squared error suffers saturation."
+    },
+    {
+      "id": 80,
+      "topic": "deep-learning",
+      "difficulty": "medium",
+      "question": "Convolutional Neural Networks (CNNs) are designed for image-like data. Which statements about CNN components are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A convolutional layer applies one giant fully-connected filter to the entire image with no weight sharing"
+        },
+        {
+          "id": "b",
+          "text": "Weight sharing means the same filter is applied at every spatial location, drastically reducing parameter count"
+        },
+        {
+          "id": "c",
+          "text": "Pooling layers LEARN weights during training just like convolutional layers"
+        },
+        {
+          "id": "d",
+          "text": "Stride controls how far the filter moves per step; padding controls how the edges are handled"
+        },
+        {
+          "id": "e",
+          "text": "Deeper CNN layers typically detect simpler features (edges) while earlier layers detect object-level concepts"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "The hierarchy is the REVERSE of (e): earlier layers detect simple features (edges, corners), deeper layers detect higher-level, object-like features. (a) is wrong — convolutional layers apply SMALL filters with weight sharing across spatial positions. (c) is false — max-pooling has no learnable parameters."
+    },
+    {
+      "id": 81,
+      "topic": "deep-learning",
+      "difficulty": "hard",
+      "question": "Recurrent Neural Networks (RNNs) and their variants. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Vanilla RNNs process sequences fully in parallel, just like feed-forward networks"
+        },
+        {
+          "id": "b",
+          "text": "Vanilla RNNs suffer from vanishing and exploding gradients over long sequences"
+        },
+        {
+          "id": "c",
+          "text": "LSTMs always outperform GRUs regardless of task or data size"
+        },
+        {
+          "id": "d",
+          "text": "GRUs are a simplified variant of LSTMs with fewer gates"
+        },
+        {
+          "id": "e",
+          "text": "RNNs process sequences in parallel across time steps, like Transformers do"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "RNNs are SEQUENTIAL by construction — they must process each time step before the next. This is a key limitation that Transformers remove via self-attention. (a) is wrong — RNNs are inherently sequential because h_t depends on h_{t-1}. (c) is false — LSTMs and GRUs have comparable performance on many tasks."
+    },
+    {
+      "id": 82,
+      "topic": "deep-learning",
+      "difficulty": "hard",
+      "question": "Backpropagation through time (BPTT) is used to train RNNs. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "BPTT can backpropagate gradients through time without any of the vanishing/exploding problems"
+        },
+        {
+          "id": "b",
+          "text": "Gradients can vanish or explode exponentially with sequence length"
+        },
+        {
+          "id": "c",
+          "text": "Gradient clipping works by multiplying all gradients by 2.0 to amplify them"
+        },
+        {
+          "id": "d",
+          "text": "Truncated BPTT only backpropagates through a fixed recent window to limit compute"
+        },
+        {
+          "id": "e",
+          "text": "BPTT cannot handle sequences longer than the training batch size"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is false: BPTT is independent of batch size. The per-sequence length determines how far gradients propagate back, not the batch size across parallel sequences. (a) is wrong — vanishing and exploding gradients are THE primary problems BPTT faces. (c) is false — gradient clipping REDUCES gradient magnitude when it exceeds a threshold."
+    },
+    {
+      "id": 83,
+      "topic": "deep-learning",
+      "difficulty": "medium",
+      "question": "Consider training a neural network with stochastic gradient descent (SGD). Which statements about SGD and its variants are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "SGD always uses the entire training set for every parameter update"
+        },
+        {
+          "id": "b",
+          "text": "Momentum accelerates SGD by accumulating a moving average of past gradients"
+        },
+        {
+          "id": "c",
+          "text": "Adam adapts per-parameter learning rates using first and second moment estimates"
+        },
+        {
+          "id": "d",
+          "text": "A learning-rate schedule (decay over epochs) often improves convergence"
+        },
+        {
+          "id": "e",
+          "text": "Full-batch gradient descent always converges faster than SGD in practice for deep networks"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Full-batch GD is slower per step (more compute) and often gets stuck in sharp minima. SGD's noise actually helps escape saddle points and find flatter minima. (e) is false. (a) is wrong — SGD uses MINI-BATCHES; full-batch GD uses the entire set."
+    },
+    {
+      "id": 84,
+      "topic": "deep-learning",
+      "difficulty": "hard",
+      "question": "The Universal Approximation Theorem states that a sufficiently wide feed-forward network with a single hidden layer can approximate any continuous function. Which statements about its implications are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Universal Approximation Theorem tells you exactly how to TRAIN the network to find the approximating weights"
+        },
+        {
+          "id": "b",
+          "text": "It specifies the number of hidden units required for any target function"
+        },
+        {
+          "id": "c",
+          "text": "It guarantees SGD can find the approximating weights in polynomial time"
+        },
+        {
+          "id": "d",
+          "text": "In practice, deeper networks often require FEWER total parameters than a single wide layer to approximate the same function"
+        },
+        {
+          "id": "e",
+          "text": "It implies deep learning is unnecessary in theory"
+        }
+      ],
+      "correctAnswers": [
+        "d"
+      ],
+      "explanation": "(e) is a common misinterpretation. The theorem is about representational capacity, not practical efficiency or trainability. Deep networks win on BOTH training ease AND parameter efficiency. (a) is wrong — it is an existence result, not a learnability result; training is a separate problem. (b) is false — the theorem is silent on the required width. (c) is false — learnability is not addressed."
+    },
+    {
+      "id": 85,
+      "topic": "deep-learning",
+      "difficulty": "medium",
+      "question": "In a classification task with K classes, the softmax output layer computes f_m(x) = e^{Z_m} / Σ_ℓ e^{Z_ℓ}. Which properties hold?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Softmax outputs can be arbitrary real numbers outside [0, 1]"
+        },
+        {
+          "id": "b",
+          "text": "Softmax is invariant to SCALING logits by a positive constant"
+        },
+        {
+          "id": "c",
+          "text": "Softmax is a generalization of the logistic sigmoid to K > 2 classes"
+        },
+        {
+          "id": "d",
+          "text": "The softmax output is always one-hot (exactly one element equals 1)"
+        },
+        {
+          "id": "e",
+          "text": "Softmax is used with cross-entropy loss for multi-class classification"
+        }
+      ],
+      "correctAnswers": [
+        "c",
+        "e"
+      ],
+      "explanation": "Softmax outputs are CONTINUOUS probabilities in (0, 1); they are not one-hot. Only after argmax would you obtain a discrete class prediction. (a) is false — softmax outputs are strictly in (0, 1) and sum to 1. (b) is false — scaling logits DOES change the distribution (sharper or flatter). It is only invariant to SHIFTS."
+    },
+    {
+      "id": 86,
+      "topic": "generative-ai",
+      "difficulty": "medium",
+      "question": "Regarding the Transformer architecture introduced in 'Attention Is All You Need' (2017), which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Self-attention forces each position to attend only to its immediate predecessor, just like an RNN"
+        },
+        {
+          "id": "b",
+          "text": "It removes the sequential bottleneck of RNNs, enabling massive parallelism during training"
+        },
+        {
+          "id": "c",
+          "text": "Transformers only work on image data, not text"
+        },
+        {
+          "id": "d",
+          "text": "Transformers require fewer parameters than equivalent RNNs for the same task"
+        },
+        {
+          "id": "e",
+          "text": "Attention weights capture dynamic relationships between tokens that depend on the input"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "e"
+      ],
+      "explanation": "Transformers typically require MORE parameters than RNNs for similar capacity, not fewer — but their parallelism makes them far more efficient to train on modern hardware. (d) is false. (a) is wrong — self-attention attends to ALL positions in parallel, not just the predecessor. (c) is false — Transformers power LLMs, which are text-first models."
+    },
+    {
+      "id": 87,
+      "topic": "generative-ai",
+      "difficulty": "hard",
+      "question": "An autoregressive LLM generates text by modeling P(w_n | w_1, ..., w_{n-1}). Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Each token is sampled INDEPENDENTLY of all prior context, like a bag of words"
+        },
+        {
+          "id": "b",
+          "text": "The 'temperature' hyperparameter rescales logits before softmax; lower temperature makes sampling more deterministic"
+        },
+        {
+          "id": "c",
+          "text": "Temperature = 1.0 forces greedy decoding; temperature → 0 adds maximum randomness"
+        },
+        {
+          "id": "d",
+          "text": "Higher temperature increases diversity but also the risk of nonsensical or hallucinated output"
+        },
+        {
+          "id": "e",
+          "text": "LLMs maintain a structured knowledge database that they retrieve facts from"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is a major misconception — LLMs are PROBABILISTIC text models, not fact databases. They generate statistically likely sequences and can produce fluent-sounding but factually incorrect text (hallucinations). (a) is wrong — autoregressive LLMs condition each token on ALL prior tokens. (c) is false — the relationship is inverted: T→0 is greedy, higher T is more random."
+    },
+    {
+      "id": 88,
+      "topic": "generative-ai",
+      "difficulty": "medium",
+      "question": "Which of the following are core distinctions between discriminative and generative models?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Discriminative models learn the joint P(x, y); generative models learn only P(y|x)"
+        },
+        {
+          "id": "b",
+          "text": "Generative models learn P(x) or P(x, y) — the distribution of the data itself"
+        },
+        {
+          "id": "c",
+          "text": "A generative model can be used to SAMPLE new data points; a discriminative model typically cannot"
+        },
+        {
+          "id": "d",
+          "text": "Classification with logistic regression is a discriminative model; a Gaussian mixture model is generative"
+        },
+        {
+          "id": "e",
+          "text": "Generative models are strictly better than discriminative models for all prediction tasks"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "For pure classification/prediction, discriminative models typically outperform generative ones because they directly target the quantity of interest. Generative models shine when the full data distribution is the goal (e.g., image synthesis, text generation). (a) is wrong — the roles are reversed. Discriminative: P(y|x). Generative: P(x) or P(x,y)."
+    },
+    {
+      "id": 89,
+      "topic": "generative-ai",
+      "difficulty": "hard",
+      "question": "Large Language Models (LLMs) exhibit 'hallucinations' — fluent but factually incorrect outputs. Which statements correctly describe WHY?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hallucinations occur only when the training data itself contains explicit falsehoods"
+        },
+        {
+          "id": "b",
+          "text": "In regions of the text distribution with sparse training data, the model still emits statistically-likely (but unverified) tokens"
+        },
+        {
+          "id": "c",
+          "text": "LLMs contain an internal 'uncertainty meter' that flags when they are hallucinating"
+        },
+        {
+          "id": "d",
+          "text": "Higher temperature amplifies hallucination risk"
+        },
+        {
+          "id": "e",
+          "text": "Hallucinations are always caused by bugs in the inference code and can be eliminated with better engineering"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is wrong — hallucinations are a FUNDAMENTAL consequence of the autoregressive likelihood-maximization objective. They cannot be eliminated by engineering alone; they require architectural or grounding changes (e.g., retrieval augmentation). (a) is wrong — hallucinations can arise in regions of sparse data even when training labels are accurate. (c) is false — LLMs have no such self-awareness mechanism by default."
+    },
+    {
+      "id": 90,
+      "topic": "generative-ai",
+      "difficulty": "medium",
+      "question": "Consider applying an LLM in a finance workflow. Which of the following are REASONABLE applications, and which are dangerous misuses?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Relying on an LLM's free-text recommendation for trade execution WITHOUT any human or systematic risk controls is safe"
+        },
+        {
+          "id": "b",
+          "text": "Extracting sentiment from public news headlines — reasonable"
+        },
+        {
+          "id": "c",
+          "text": "An LLM's memorized numerical facts from pre-training are ALWAYS perfectly accurate"
+        },
+        {
+          "id": "d",
+          "text": "Relying on the LLM's memorized knowledge for precise historical financial figures (e.g., 'What was AAPL's revenue in Q3 2019?') — unreliable"
+        },
+        {
+          "id": "e",
+          "text": "Using an LLM to replace human risk management entirely — safe because LLMs are objective"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is the opposite of best practice. LLMs can produce fluent but wrong content, have no legal accountability, and have well-documented biases. Human oversight is essential. (a) is wrong — LLMs can hallucinate; unsupervised trading on their output is dangerous. (c) is false — memorized facts can be outdated or incorrect; verification is needed."
+    },
+    {
+      "id": 91,
+      "topic": "generative-ai",
+      "difficulty": "medium",
+      "question": "Which of the following are motivations and capabilities of self-attention in Transformers?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Self-attention requires tokens to be processed strictly one at a time, serially"
+        },
+        {
+          "id": "b",
+          "text": "Allows each token to 'attend to' the most relevant context tokens regardless of distance"
+        },
+        {
+          "id": "c",
+          "text": "Enables efficient parallel training on modern GPUs/TPUs"
+        },
+        {
+          "id": "d",
+          "text": "Naturally resolves ambiguity like 'bank' (river bank vs. financial institution) using surrounding context"
+        },
+        {
+          "id": "e",
+          "text": "Completely eliminates the need for training data — Transformers generalize without supervision"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Transformers still require massive training data — typically more than RNNs — to reach their full capability. (e) is false. (a) is wrong — the key advantage is PARALLEL processing across positions."
+    },
+    {
+      "id": 92,
+      "topic": "algorithmic-bias",
+      "difficulty": "medium",
+      "question": "Which of the following are sources of algorithmic bias as classically categorized?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Historical bias means the training data was corrupted by a software bug"
+        },
+        {
+          "id": "b",
+          "text": "Representation bias: the training data under-represents certain groups"
+        },
+        {
+          "id": "c",
+          "text": "Measurement bias: the features/proxies used systematically mismeasure the target"
+        },
+        {
+          "id": "d",
+          "text": "Aggregation bias: a single model is applied to heterogeneous groups, masking subgroup differences"
+        },
+        {
+          "id": "e",
+          "text": "Latency bias: the model runs too slowly in production"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Latency is a systems/engineering concern, not a bias category. (a)–(d) are the canonical four sources in the Suresh & Guttag framework. (a) is wrong — historical bias means the WORLD that produced the data was itself biased, not a bug."
+    },
+    {
+      "id": 93,
+      "topic": "algorithmic-bias",
+      "difficulty": "hard",
+      "question": "The COMPAS recidivism prediction system and similar criminal-justice algorithms have been criticized for bias. Which statements accurately describe the issues?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Removing 'race' as an input feature fully eliminates racial bias in the model's predictions"
+        },
+        {
+          "id": "b",
+          "text": "False-positive rates were found to differ systematically across racial groups (equal opportunity violation)"
+        },
+        {
+          "id": "c",
+          "text": "Removing the protected attribute from the training data guarantees the model cannot learn bias"
+        },
+        {
+          "id": "d",
+          "text": "Removing 'race' as an explicit input variable eliminates bias"
+        },
+        {
+          "id": "e",
+          "text": "The issue demonstrates that algorithms can reproduce or amplify bias present in the historical data"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "e"
+      ],
+      "explanation": "(d) is the fairness-through-unawareness fallacy — removing the protected attribute does NOT remove bias because other features (zip code, name, etc.) serve as proxies. (a) is wrong — this is the 'fairness through unawareness' fallacy. Correlated proxies remain. (c) is false — proxy features still encode the protected attribute."
+    },
+    {
+      "id": 94,
+      "topic": "algorithmic-bias",
+      "difficulty": "medium",
+      "question": "Distinguish between ALLOCATIVE and REPRESENTATIONAL harms. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Allocative and representational harms are mutually exclusive and never occur in the same system"
+        },
+        {
+          "id": "b",
+          "text": "Representational harm: the system reinforces stereotypes or symbolic subordination (e.g., image search for 'CEO' returning only men)"
+        },
+        {
+          "id": "c",
+          "text": "Allocative harms tend to be easier to quantify than representational harms"
+        },
+        {
+          "id": "d",
+          "text": "Both types can occur simultaneously in a single system"
+        },
+        {
+          "id": "e",
+          "text": "Representational harm is trivial and should not be regulated"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is a normative claim that most researchers reject — representational harms can materially affect identity formation, public perception, and downstream opportunities. (a) is wrong — both can co-occur in the same system (e.g., a biased image search with downstream hiring effects)."
+    },
+    {
+      "id": 95,
+      "topic": "algorithmic-bias",
+      "difficulty": "hard",
+      "question": "Feedback loops can AMPLIFY algorithmic bias over time. Which scenarios illustrate this?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Predictive-policing model sends more police to historically-over-policed areas → more arrests in those areas → data confirms the model's predictions → next iteration doubles down"
+        },
+        {
+          "id": "b",
+          "text": "A biased resume-screening model filters out more female applicants → future training data has fewer women → model becomes even more biased against women"
+        },
+        {
+          "id": "c",
+          "text": "A ONE-TIME deployment is immune to feedback loops because it runs only once"
+        },
+        {
+          "id": "d",
+          "text": "A model is deployed and its outputs are never used to inform further decisions, so biases cannot amplify"
+        },
+        {
+          "id": "e",
+          "text": "Feedback loops are only a concern in recommender systems and never in high-stakes domains like lending or justice"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b"
+      ],
+      "explanation": "(d) is a non-feedback-loop scenario — but (d)'s premise rarely holds in practice. (e) is false — feedback loops are especially concerning in high-stakes domains. (c) is false — feedback emerges over subsequent iterations; 'one-time' is rarely the case in production."
+    },
+    {
+      "id": 96,
+      "topic": "algorithmic-bias",
+      "difficulty": "medium",
+      "question": "Several fairness criteria exist, and Chouldechova's impossibility theorem shows they cannot all be simultaneously satisfied when base rates differ. Which of the following are fairness metrics?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Demographic parity requires equal accuracy across groups"
+        },
+        {
+          "id": "b",
+          "text": "Equal opportunity: P(ŷ=1 | A=0, Y=1) = P(ŷ=1 | A=1, Y=1) (equal TPR across groups)"
+        },
+        {
+          "id": "c",
+          "text": "Equalized odds is the requirement that accuracy equal 100% across all groups"
+        },
+        {
+          "id": "d",
+          "text": "Calibration: P(Y=1 | ŷ=p, A=a) = p for each group a"
+        },
+        {
+          "id": "e",
+          "text": "Minimum overall accuracy: the only metric that matters"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Accuracy is NOT a fairness metric — it says nothing about group-level disparities. The other four are established formal fairness criteria. (a) is wrong — demographic parity is about equal POSITIVE PREDICTION rates, not accuracy. (c) is false — equalized odds is about equal TPR AND equal FPR, not 100% accuracy."
+    },
+    {
+      "id": 97,
+      "topic": "algorithmic-bias",
+      "difficulty": "hard",
+      "question": "Lessons from the Therac-25 medical disaster are sometimes cited in algorithmic-bias discussions. Which takeaways apply broadly?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The Therac-25 lesson is that the machine-learning algorithm must always be blamed directly for any failure"
+        },
+        {
+          "id": "b",
+          "text": "Unit-testing the algorithm in isolation does not guarantee safety in deployment"
+        },
+        {
+          "id": "c",
+          "text": "User interface design and error-reporting matter as much as algorithmic correctness"
+        },
+        {
+          "id": "d",
+          "text": "Safety cases require considering how the system behaves under all foreseeable conditions, including unexpected inputs"
+        },
+        {
+          "id": "e",
+          "text": "Blaming individual operators is the most effective way to prevent future failures"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is the 'bad apple' fallacy. Complex-system theorists (Reason, Rasmussen) emphasize that systemic factors — not individual error — are usually the root cause of catastrophic failures. (a) is wrong — the Therac-25 lesson is about SYSTEM-level failure, not blaming the algorithm alone."
+    },
+    {
+      "id": 98,
+      "topic": "options",
+      "difficulty": "medium",
+      "question": "Exchange-traded stock options have standardized contract specifications. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "One option contract represents exactly 1 share of the underlying"
+        },
+        {
+          "id": "b",
+          "text": "A quoted option price of $2.73 means the contract costs $273 (price × 100)"
+        },
+        {
+          "id": "c",
+          "text": "American options can be exercised any time before expiration; European options only at expiration"
+        },
+        {
+          "id": "d",
+          "text": "The strike price is fixed at the time of contract writing"
+        },
+        {
+          "id": "e",
+          "text": "Option holders receive voting rights and dividends from the underlying stock"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Option holders do NOT receive dividends or voting rights — they merely have the RIGHT to buy/sell at the strike. (e) is false. (a) is wrong — the standard multiplier is 100 shares, not 1."
+    },
+    {
+      "id": 99,
+      "topic": "options",
+      "difficulty": "medium",
+      "question": "For a long call option with strike K and premium P, which statements about P&L at expiration are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Break-even at expiration for a long call: S = K − P (strike minus premium)"
+        },
+        {
+          "id": "b",
+          "text": "Maximum loss = P (the premium paid) — capped downside"
+        },
+        {
+          "id": "c",
+          "text": "Maximum gain = unlimited (as spot rises indefinitely)"
+        },
+        {
+          "id": "d",
+          "text": "If S < K at expiration, the option expires worthless and the loss = P"
+        },
+        {
+          "id": "e",
+          "text": "A long call is an obligation to purchase shares at expiration"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "A long call is a RIGHT, not an obligation. The holder can let it expire worthless if OTM. (e) is false. (a) is wrong — break-even is K + P, not K − P."
+    },
+    {
+      "id": 100,
+      "topic": "options",
+      "difficulty": "hard",
+      "question": "Time decay (theta) describes how an option's value erodes as expiration approaches. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Theta is STRICTLY LINEAR over time to expiration"
+        },
+        {
+          "id": "b",
+          "text": "For long option positions, theta is a headwind (position loses value as time passes, all else equal)"
+        },
+        {
+          "id": "c",
+          "text": "For short option positions, theta is a tailwind (the seller gains as value decays)"
+        },
+        {
+          "id": "d",
+          "text": "Theta is approximately ZERO for deep ITM options far from expiration"
+        },
+        {
+          "id": "e",
+          "text": "Theta is constant across all strikes and all times to expiration"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is false — theta varies substantially with moneyness and time. It peaks near ATM as expiration approaches. Deep ITM options have minimal time value, so theta ≈ 0 there. (a) is wrong — theta is non-linear; decay accelerates near expiration."
+    },
+    {
+      "id": 101,
+      "topic": "options",
+      "difficulty": "hard",
+      "question": "A covered call combines a long stock position with a short call at strike K. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "If stock rises above K, the shares are 'called away' — upside is capped at K plus the premium received"
+        },
+        {
+          "id": "b",
+          "text": "If stock stays below K, the call expires worthless — the investor keeps both the stock and the premium"
+        },
+        {
+          "id": "c",
+          "text": "The strategy profits from volatile upward moves beyond K far more than a simple buy-and-hold"
+        },
+        {
+          "id": "d",
+          "text": "It is a common income-generating strategy in flat-to-moderately-bullish markets"
+        },
+        {
+          "id": "e",
+          "text": "Downside risk is fully hedged by the covered call"
+        }
+      ],
+      "correctAnswers": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "(c) is FALSE — the strategy caps upside, so large upward moves beyond K are worse for the covered-call writer than for a pure long position. (e) is false — the premium offsets only a small portion of potential downside; downside is NOT fully hedged."
+    },
+    {
+      "id": 102,
+      "topic": "options",
+      "difficulty": "hard",
+      "question": "A standard (long) butterfly spread on calls involves buying 1 call at strike K_L, selling 2 calls at K_M, and buying 1 call at K_H, where K_L < K_M < K_H and the strikes are equally spaced. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Maximum profit of a long butterfly occurs when the stock price at expiration is either K_L or K_H"
+        },
+        {
+          "id": "b",
+          "text": "The butterfly profits from HIGH volatility pushing the stock far from K_M"
+        },
+        {
+          "id": "c",
+          "text": "Maximum loss is capped at the net premium paid"
+        },
+        {
+          "id": "d",
+          "text": "The payoff graph at expiration is tent-shaped, peaking at K_M"
+        },
+        {
+          "id": "e",
+          "text": "The butterfly has unlimited upside if the stock rises far above K_H"
+        }
+      ],
+      "correctAnswers": [
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is false — the two long calls at K_L and K_H are exactly offset by the two short calls at K_M beyond K_H, making upside capped (payoff returns to zero above K_H). (a) is false — max profit is at K_M, not the wings. (b) is false — the butterfly profits from LOW volatility (stock settling near K_M)."
+    },
+    {
+      "id": 103,
+      "topic": "options",
+      "difficulty": "medium",
+      "question": "The Black-Scholes option pricing model. Which of the following are INPUTS to the formula?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The stock's EXPECTED RETURN μ is a required input to Black-Scholes"
+        },
+        {
+          "id": "b",
+          "text": "Strike price K"
+        },
+        {
+          "id": "c",
+          "text": "The strike price is not required — Black-Scholes computes it automatically"
+        },
+        {
+          "id": "d",
+          "text": "Risk-free interest rate r"
+        },
+        {
+          "id": "e",
+          "text": "Expected return on the underlying stock (μ)"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "Notably, the EXPECTED RETURN (μ) is NOT an input to Black-Scholes — this is a key insight. Only volatility matters because the risk-neutral framework replaces μ with r. (a) is wrong — a key insight of Black-Scholes is that μ does NOT enter the formula; only volatility matters. (c) is false — strike K is a REQUIRED input."
+    },
+    {
+      "id": 104,
+      "topic": "options",
+      "difficulty": "hard",
+      "question": "Implied volatility (IV) is the volatility that, when input to Black-Scholes, reproduces the market price of an option. Which statements about IV are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Implied volatility is equal by construction to the historical realized volatility"
+        },
+        {
+          "id": "b",
+          "text": "IV typically varies across strikes, producing a 'volatility smile' or 'smirk'"
+        },
+        {
+          "id": "c",
+          "text": "The volatility smile is inconsistent with Black-Scholes' assumption of constant volatility"
+        },
+        {
+          "id": "d",
+          "text": "Higher IV means more expensive options, all else equal"
+        },
+        {
+          "id": "e",
+          "text": "IV is always equal to the historical realized volatility of the underlying"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "IV is forward-looking (market's expectation); realized volatility is backward-looking. They typically differ, especially in stressed markets. (e) is false. (a) is wrong — IV and realized volatility typically DIFFER; IV is forward-looking."
+    },
+    {
+      "id": 105,
+      "topic": "quant-practice",
+      "difficulty": "hard",
+      "question": "The Kamel interview discusses why Gaussian assumptions for returns are dangerously inaccurate. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Gaussian models OVERESTIMATE the probability of extreme events in financial markets"
+        },
+        {
+          "id": "b",
+          "text": "Jump-diffusion models mix two distributions: a 'normal' regime and a low-probability 'jump' regime with much larger variance"
+        },
+        {
+          "id": "c",
+          "text": "VaR calculated under a Gaussian assumption typically UNDERESTIMATES true tail risk"
+        },
+        {
+          "id": "d",
+          "text": "The 1987 Black Monday crash would have been a 20+ sigma event under a Gaussian model — essentially impossible"
+        },
+        {
+          "id": "e",
+          "text": "Historical data shows market returns are well-modeled by a simple Gaussian distribution in all time horizons"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is completely false — empirical returns have excess kurtosis, volatility clustering, and skewness. Gaussian dramatically understates tail risk. (a) is wrong — Gaussian UNDER-estimates extremes because real returns have fat tails."
+    },
+    {
+      "id": 106,
+      "topic": "quant-practice",
+      "difficulty": "medium",
+      "question": "Which of the following are insights from the Kamel interview about designing a quantitative data infrastructure at scale?",
+      "options": [
+        {
+          "id": "a",
+          "text": "At billions of data points, traditional SQL databases are strictly faster than NoSQL solutions for numerical time-series workloads"
+        },
+        {
+          "id": "b",
+          "text": "NoSQL stores always provide strict ACID guarantees for financial transactions"
+        },
+        {
+          "id": "c",
+          "text": "Point-in-time data and revised data produce identical backtests by construction"
+        },
+        {
+          "id": "d",
+          "text": "Revised (restated) data is ideal for backtesting because it is more accurate than the original"
+        },
+        {
+          "id": "e",
+          "text": "Multiple competing vendors help detect errors faster than a single monopoly data source"
+        }
+      ],
+      "correctAnswers": [
+        "e"
+      ],
+      "explanation": "(d) is the opposite of truth — restated data introduces look-ahead bias because it shows values that weren't known at the historical date. PIT data is the gold standard for backtesting. (a) is wrong — traditional SQL becomes a bottleneck at such scale; specialized stores are typically faster. (b) is false — most NoSQL stores relax ACID in favor of scalability. (c) is false — they differ exactly because revisions introduce lookahead."
+    },
+    {
+      "id": 107,
+      "topic": "quant-practice",
+      "difficulty": "hard",
+      "question": "The 'alpha lifecycle' describes how quantitative strategies decay over time. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Alpha strategies are permanent physical laws that never decay"
+        },
+        {
+          "id": "b",
+          "text": "Exploitation phase: other participants find the same anomaly and trade against it, compressing returns"
+        },
+        {
+          "id": "c",
+          "text": "Evaporation phase: returns shrink below cost or disappear entirely as competition saturates"
+        },
+        {
+          "id": "d",
+          "text": "Alpha strategies behave more like depreciating assets than permanent physics laws"
+        },
+        {
+          "id": "e",
+          "text": "A discovered alpha persists indefinitely as long as the code is not published"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is false — alpha can decay without public disclosure, through regime changes, market-structure evolution, or other managers independently discovering similar edges. (a) is wrong — alpha strategies are depreciating assets, not permanent laws."
+    },
+    {
+      "id": 108,
+      "topic": "quant-practice",
+      "difficulty": "medium",
+      "question": "Which of the following are warning signs of a strategy that may be OVERFIT rather than genuinely edge-producing?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Consistent performance across multiple unrelated markets and decades is a classic WARNING sign of overfitting"
+        },
+        {
+          "id": "b",
+          "text": "The strategy rule is highly complex with many parameters tuned on the same data"
+        },
+        {
+          "id": "c",
+          "text": "High in-sample Sharpe is irrelevant to overfitting risk"
+        },
+        {
+          "id": "d",
+          "text": "The economic rationale is unclear — 'it just works'"
+        },
+        {
+          "id": "e",
+          "text": "The strategy performs consistently across multiple unrelated markets and decades"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is a GOOD sign (robustness), not a warning sign. Overfit strategies fail to generalize across markets and time periods. (a) is wrong — such consistency is a sign of ROBUSTNESS, not overfitting. (c) is false — high in-sample + low out-of-sample is a CLASSIC overfitting signal."
+    },
+    {
+      "id": 109,
+      "topic": "quant-practice",
+      "difficulty": "hard",
+      "question": "Why have classical statistical arbitrage and yield-curve arbitrage strategies lost much of their profitability since the 1990s?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Statistical arbitrage has been specifically outlawed by financial regulators since 2000"
+        },
+        {
+          "id": "b",
+          "text": "Retail day-traders continue to outnumber institutional algorithms in equities"
+        },
+        {
+          "id": "c",
+          "text": "Crowding has DECREASED since the 1990s as fewer firms run quantitative strategies"
+        },
+        {
+          "id": "d",
+          "text": "Regulation has outright banned statistical arbitrage strategies"
+        },
+        {
+          "id": "e",
+          "text": "Easy anomalies have been priced in; modern alpha requires exotic data and multi-factor combinations"
+        }
+      ],
+      "correctAnswers": [
+        "e"
+      ],
+      "explanation": "Statistical arbitrage is legal; there is no ban. The decline is driven by competition, regime change, market-structure evolution, and the exhaustion of simple anomalies. (a) is wrong — stat arb is legal; its decline is due to crowding and regime change, not regulation. (b) is false — institutional algos now dominate volume. (c) is false — crowding has INCREASED dramatically."
+    },
+    {
+      "id": 110,
+      "topic": "quant-practice",
+      "difficulty": "medium",
+      "question": "Good strategy-design principles emphasized by practitioners include which of the following?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Strategy simplicity is a weakness; the most complex rules always perform best out-of-sample"
+        },
+        {
+          "id": "b",
+          "text": "Simplicity: fewer parameters and simpler rules generalize better"
+        },
+        {
+          "id": "c",
+          "text": "Out-of-sample testing on truly unseen data is considered excessive and unnecessary"
+        },
+        {
+          "id": "d",
+          "text": "Black-box neural networks with no explainability are preferred because they discover everything automatically"
+        },
+        {
+          "id": "e",
+          "text": "Realistic transaction costs must be included in the backtest from the start"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "e"
+      ],
+      "explanation": "Unexplainable black boxes are a risk-management nightmare — they can fail silently in new regimes and provide no diagnosis path. (d) is the opposite of best practice. (a) is wrong — simplicity generalizes better; complexity is a common overfitting signal. (c) is false — OOS testing is essential best practice."
+    },
+    {
+      "id": 111,
+      "topic": "ml-execution",
+      "difficulty": "medium",
+      "question": "ML for trade execution aims to minimize slippage and market impact. Which statements correctly define these concepts?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Slippage and market impact are exactly synonymous terms"
+        },
+        {
+          "id": "b",
+          "text": "Market impact: the price movement caused by the execution of a large order"
+        },
+        {
+          "id": "c",
+          "text": "Liquidity risk: the risk of not being able to execute at all at reasonable prices"
+        },
+        {
+          "id": "d",
+          "text": "Temporary impact: price movement that reverses after execution completes"
+        },
+        {
+          "id": "e",
+          "text": "Slippage and market impact are synonymous"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Slippage is the TOTAL realized cost; market impact is one COMPONENT of it (alongside spread, fees, timing risk). (e) is false. (a) is wrong — slippage is the total realized cost; market impact is one component of it."
+    },
+    {
+      "id": 112,
+      "topic": "ml-execution",
+      "difficulty": "hard",
+      "question": "Volume-Weighted Average Price (VWAP) and Time-Weighted Average Price (TWAP) are common execution benchmarks. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "VWAP weights price by TIME intervals equally, while TWAP weights by VOLUME"
+        },
+        {
+          "id": "b",
+          "text": "A VWAP execution algorithm slices an order proportionally to historical volume profiles"
+        },
+        {
+          "id": "c",
+          "text": "TWAP is simpler but may under-execute during high-volume periods and over-execute during low-volume ones"
+        },
+        {
+          "id": "d",
+          "text": "Executing a large order at VWAP usually produces LESS market impact than executing it all at open"
+        },
+        {
+          "id": "e",
+          "text": "TWAP is always superior to VWAP because it does not require volume forecasts"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is too strong. TWAP is robust to volume-forecast errors but gives up the known advantage of tracking real market liquidity. Neither is universally superior. (a) is wrong — the definitions are SWAPPED. VWAP weights by volume; TWAP weights by time."
+    },
+    {
+      "id": 113,
+      "topic": "ml-execution",
+      "difficulty": "medium",
+      "question": "Reinforcement learning has been applied to trade execution. Which problem features make RL a good fit?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Execution is a ONE-SHOT static decision with no temporal structure or feedback"
+        },
+        {
+          "id": "b",
+          "text": "A clear feedback signal: slippage (reward or cost) is measurable per execution"
+        },
+        {
+          "id": "c",
+          "text": "An adaptive policy can respond to changing order-book conditions in real time"
+        },
+        {
+          "id": "d",
+          "text": "Training data is plentiful: historical executions provide many episodes"
+        },
+        {
+          "id": "e",
+          "text": "Execution is a one-shot decision with no temporal structure"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Execution is INHERENTLY sequential — (e) is the opposite of the problem's structure. That's precisely why RL is natural here. (a) is wrong — execution is inherently SEQUENTIAL with feedback, which is why RL fits."
+    },
+    {
+      "id": 114,
+      "topic": "ml-execution",
+      "difficulty": "hard",
+      "question": "A portfolio manager runs a strategy with 20 bps of predictive edge per trade. Which of the following are plausible concerns about its executability?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Transaction costs are always exactly zero for professional quantitative trading firms"
+        },
+        {
+          "id": "b",
+          "text": "Strategy capacity is inversely related to trade size — small funds may exploit it while large funds cannot"
+        },
+        {
+          "id": "c",
+          "text": "Market impact grows non-linearly (often roughly square-root) with trade size"
+        },
+        {
+          "id": "d",
+          "text": "Adverse-selection costs can erode edge as sophisticated counterparties trade against mispriced orders"
+        },
+        {
+          "id": "e",
+          "text": "Execution costs are essentially zero for liquid large-cap equities, so edge is preserved"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Even liquid large-caps have non-zero bid-ask spreads, market impact for large orders, and fees. (e) is false. (a) is wrong — even the best firms face non-zero spreads, impact, and fees."
+    },
+    {
+      "id": 115,
+      "topic": "ml-execution",
+      "difficulty": "medium",
+      "question": "Which statements correctly distinguish temporary and permanent market impact?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Splitting a large order over time INCREASES temporary impact relative to executing all at once"
+        },
+        {
+          "id": "b",
+          "text": "Temporary impact PERSISTS indefinitely after execution completes"
+        },
+        {
+          "id": "c",
+          "text": "Permanent impact is entirely due to trader error rather than information content"
+        },
+        {
+          "id": "d",
+          "text": "Permanent impact is zero for pure liquidity-motivated (non-informational) trades"
+        },
+        {
+          "id": "e",
+          "text": "Splitting a large order over time typically REDUCES temporary impact by letting liquidity refill between slices"
+        }
+      ],
+      "correctAnswers": [
+        "e"
+      ],
+      "explanation": "(d) overstates: even non-informational trades have SOME permanent footprint due to inventory effects on market-makers and the information content the market INFERS about the trade's motivation. (a) is wrong — splitting DECREASES temporary impact by allowing liquidity to refill. (b) is false — temporary impact, by definition, mean-reverts. (c) is false — permanent impact reflects information or inventory effects."
+    },
+    {
+      "id": 116,
+      "topic": "ai-infrastructure",
+      "difficulty": "medium",
+      "question": "The CFA Handbook chapters discuss accelerated computing for AI in investments. Which statements about GPU acceleration are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "GPUs deliver speedups purely for sequential algorithms, not for parallel ones"
+        },
+        {
+          "id": "b",
+          "text": "Typical speedups over CPU for deep-learning training are 10–100×"
+        },
+        {
+          "id": "c",
+          "text": "GPUs slow down matrix multiplications compared to CPUs"
+        },
+        {
+          "id": "d",
+          "text": "Faster inference enables real-time applications like automated execution and live risk monitoring"
+        },
+        {
+          "id": "e",
+          "text": "Switching to GPUs eliminates the need for data curation and feature engineering"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "d"
+      ],
+      "explanation": "(e) is false — 'data-centric AI' emphasizes that data quality, not compute speed, often determines model quality. GPUs accelerate iteration but don't solve data problems. (a) is wrong — GPUs excel at PARALLEL linear-algebra operations, not sequential ones. (c) is false — GPUs accelerate matrix ops by 10–100×."
+    },
+    {
+      "id": 117,
+      "topic": "ai-infrastructure",
+      "difficulty": "hard",
+      "question": "Explainable AI (XAI) in investment management. Which statements are correct?",
+      "options": [
+        {
+          "id": "a",
+          "text": "XAI techniques produce a single global explanation that is uniformly faithful for every prediction"
+        },
+        {
+          "id": "b",
+          "text": "Applying XAI tools is required by law in all jurisdictions worldwide"
+        },
+        {
+          "id": "c",
+          "text": "Global feature importance and local per-prediction explanations are the same thing"
+        },
+        {
+          "id": "d",
+          "text": "Applying XAI necessarily improves the raw predictive performance of the underlying model"
+        },
+        {
+          "id": "e",
+          "text": "Faithful XAI is particularly important for high-stakes decisions (lending, trading)"
+        }
+      ],
+      "correctAnswers": [
+        "e"
+      ],
+      "explanation": "(d) is false — XAI explains existing predictions; it does not retrain the model to be more accurate. Explainability and accuracy are orthogonal objectives. (a) is wrong — methods like SHAP/LIME produce LOCAL explanations per prediction, not a single global one. (b) is false — requirements vary by jurisdiction and industry. (c) is false — they answer different questions."
+    },
+    {
+      "id": 118,
+      "topic": "ai-infrastructure",
+      "difficulty": "medium",
+      "question": "Alternative data sources are increasingly used in quantitative investing. Which of the following are common alt-data categories?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Published quarterly earnings reports are the canonical example of ALTERNATIVE data"
+        },
+        {
+          "id": "b",
+          "text": "Credit-card transaction aggregates"
+        },
+        {
+          "id": "c",
+          "text": "Natural-language processing of earnings-call transcripts and news"
+        },
+        {
+          "id": "d",
+          "text": "Web-scraping product pricing and inventory data"
+        },
+        {
+          "id": "e",
+          "text": "Published quarterly earnings reports"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "Published earnings are classic FUNDAMENTAL data, not 'alternative' data. The alt-data label specifically refers to non-traditional, often unstructured sources. (a) is wrong — earnings reports are traditional fundamental data; alt data refers to non-traditional sources."
+    },
+    {
+      "id": 119,
+      "topic": "ai-infrastructure",
+      "difficulty": "hard",
+      "question": "Model drift is a production-AI concern. Which statements are TRUE?",
+      "options": [
+        {
+          "id": "a",
+          "text": "A model deployed once can be trusted forever without any monitoring"
+        },
+        {
+          "id": "b",
+          "text": "Data drift: the distribution of input features shifts, even if the target relationship is stable"
+        },
+        {
+          "id": "c",
+          "text": "Financial markets are particularly susceptible to both forms of drift due to regime changes"
+        },
+        {
+          "id": "d",
+          "text": "Continuous monitoring of input distributions and prediction distributions helps detect drift early"
+        },
+        {
+          "id": "e",
+          "text": "A model deployed once can be trusted forever without re-validation"
+        }
+      ],
+      "correctAnswers": [
+        "b",
+        "c",
+        "d"
+      ],
+      "explanation": "(e) is the opposite of best practice. Financial-model decay is fast and well-documented; continuous monitoring and periodic retraining are essential for any long-running deployment. (a) is wrong — models decay over time and continuous monitoring is essential."
+    }
+  ]
+}

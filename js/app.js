@@ -6,13 +6,12 @@ const state = {
   submitted: [],
   currentIndex: 0,
   quizMode: null,
-  questionType: 'all',
   selectedTopics: [],
   shuffleEnabled: true,
   reviewMode: false
 };
 
-// === Topic metadata (populated from questions.json) ===
+// === Topic metadata (populated from exam json) ===
 let topicMeta = {};
 
 // === DOM refs ===
@@ -31,7 +30,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadQuestions() {
   try {
-    const resp = await fetch('js/questions.json');
+    const examId = document.querySelector('input[name="exam"]:checked').value;
+    const resp = await fetch(`js/${examId}.json`);
     const data = await resp.json();
     state.allQuestions = data.questions;
     topicMeta = {};
@@ -60,6 +60,11 @@ function buildTopicCheckboxes(topics) {
 
 // === Event Listeners ===
 function setupEventListeners() {
+  // Exam selector — reload question bank on change
+  $$('input[name="exam"]').forEach(radio => {
+    radio.addEventListener('change', loadQuestions);
+  });
+
   // Quiz mode radios
   $$('input[name="quiz-mode"]').forEach(radio => {
     radio.addEventListener('change', () => {
@@ -83,18 +88,11 @@ function setupEventListeners() {
 // === Quiz Flow ===
 function startQuiz() {
   const mode = document.querySelector('input[name="quiz-mode"]:checked').value;
-  const questionType = document.querySelector('input[name="question-type"]:checked').value;
   state.quizMode = mode;
-  state.questionType = questionType;
   state.shuffleEnabled = $('#shuffle-toggle').checked;
   state.reviewMode = false;
 
-  // Start with all questions, then filter by type
   let questions = [...state.allQuestions];
-
-  if (questionType !== 'all') {
-    questions = questions.filter(q => (q.type || 'multi-select') === questionType);
-  }
 
   if (mode === 'byTopic') {
     const selected = [...$$('.topic-cb:checked')].map(cb => cb.value);
@@ -350,19 +348,19 @@ function showResults() {
   const pct = Math.round((totalCorrect / total) * 100);
   const optionPct = Math.round((totalOptionMarks / totalOptionsPossible) * 100);
 
-  // Overall score
+  // Overall score — per-option accuracy is the primary metric
   $('#overall-score').innerHTML = `
-    <div class="score-number">${pct}%</div>
-    <div class="score-detail">${totalCorrect} out of ${total} correct</div>
-    <div class="score-divider"></div>
-    <div class="score-number score-number-secondary">${optionPct}%</div>
+    <div class="score-number">${optionPct}%</div>
     <div class="score-detail">Option Accuracy — ${totalOptionMarks} out of ${totalOptionsPossible}</div>
+    <div class="score-divider"></div>
+    <div class="score-number score-number-secondary">${pct}%</div>
+    <div class="score-detail">Full-question correct — ${totalCorrect} out of ${total}</div>
   `;
 
   // Topic breakdown
   const topicList = $('#topic-scores');
   topicList.innerHTML = Object.entries(topicScores)
-    .sort((a, b) => a[1].correct / a[1].total - b[1].correct / b[1].total)
+    .sort((a, b) => (a[1].optionMarks / a[1].optionsPossible) - (b[1].optionMarks / b[1].optionsPossible))
     .map(([topicId, score]) => {
       const topicPct = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
       const topicOptPct = score.optionsPossible > 0 ? Math.round((score.optionMarks / score.optionsPossible) * 100) : 0;
@@ -371,15 +369,15 @@ function showResults() {
           <span class="topic-score-name">${topicMeta[topicId] || topicId}</span>
           <div class="topic-score-right">
             <div class="topic-score-metrics">
-              <span class="topic-score-value">${score.correct}/${score.total} (${topicPct}%)</span>
-              <span class="topic-score-value topic-score-value-secondary">${score.optionMarks}/${score.optionsPossible} options (${topicOptPct}%)</span>
+              <span class="topic-score-value">${score.optionMarks}/${score.optionsPossible} options (${topicOptPct}%)</span>
+              <span class="topic-score-value topic-score-value-secondary">${score.correct}/${score.total} (${topicPct}%)</span>
             </div>
             <div class="topic-score-bars">
               <div class="topic-score-bar">
-                <div class="topic-score-bar-fill" style="width: ${topicPct}%"></div>
+                <div class="topic-score-bar-fill" style="width: ${topicOptPct}%"></div>
               </div>
               <div class="topic-score-bar">
-                <div class="topic-score-bar-fill topic-score-bar-fill-secondary" style="width: ${topicOptPct}%"></div>
+                <div class="topic-score-bar-fill topic-score-bar-fill-secondary" style="width: ${topicPct}%"></div>
               </div>
             </div>
           </div>

@@ -16,6 +16,20 @@
       </header>
 
       <div class="card">
+        <h2>Exam</h2>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="exam" value="exam1" checked>
+            <span class="radio-label">Exam 1</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="exam" value="exam2">
+            <span class="radio-label">Exam 2</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
         <h2>Quiz Mode</h2>
         <div class="radio-group">
           <label class="radio-option">
@@ -33,24 +47,6 @@
           <label class="radio-option">
             <input type="radio" name="quiz-mode" value="byTopic">
             <span class="radio-label">By Topic</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Question Type</h2>
-        <div class="radio-group">
-          <label class="radio-option">
-            <input type="radio" name="question-type" value="all" checked>
-            <span class="radio-label">All Types</span>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="question-type" value="multi-select">
-            <span class="radio-label">Multi-Select</span>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="question-type" value="scenario">
-            <span class="radio-label">Scenarios</span>
           </label>
         </div>
       </div>
@@ -119,8 +115,8 @@
       <div class="card">
         <h2>Score by Topic</h2>
         <div class="score-legend">
-          <span class="legend-strict">Strict</span>
-          <span class="legend-options">Per-option</span>
+          <span class="legend-strict">Per-option</span>
+          <span class="legend-options">Strict</span>
         </div>
         <div id="topic-scores" class="topic-scores-list">
           <!-- Populated by JS -->
