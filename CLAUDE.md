@@ -9,7 +9,7 @@ index.html              # Single-page app (3 screens: home, quiz, results)
 css/style.css           # Mobile-first responsive styles
 js/app.js               # Quiz engine, UI rendering, scoring
 js/exam1.json           # Exam 1 bank (141 questions, 12 topics — intro ML4T)
-js/exam2.json           # Exam 2 bank (119 questions, 17 topics — advanced ML4T)
+js/exam2.json           # Exam 2 bank (154 questions, 17 topics — advanced ML4T)
 resources/              # Source materials (gitignored, not deployed)
 ```
 

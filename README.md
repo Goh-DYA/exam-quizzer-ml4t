@@ -4,8 +4,8 @@ Multi-select quizzes for GaTech CS7646 ML4T (Machine Learning for Trading) exam 
 
 ## Features
 
-- **Two exam banks** — Exam 1 (141 questions, 12 topics) and Exam 2 (119 questions, 17 topics) — swappable from the home screen
-- **260 total questions** covering the full ML4T syllabus from intro stock mechanics through reinforcement learning, deep learning, generative AI, and algorithmic bias
+- **Two exam banks** — Exam 1 (141 questions, 12 topics) and Exam 2 (154 questions, 17 topics) — swappable from the home screen
+- **295 total questions** covering the full ML4T syllabus from intro stock mechanics through reinforcement learning, deep learning, generative AI, and algorithmic bias
 - **Quiz modes** — All Questions, Random 20, Random 40, or filter By Topic
 - **Per-option scoring** — 1 point per correctly-marked option (primary metric) plus strict full-question score (secondary)
 - **Instant feedback** — per-option color coding (correct / incorrect / missed) with explanations
@@ -52,27 +52,27 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 
 Exam 1 includes both multi-select and scenario-based question types.
 
-## Exam 2 — Advanced ML4T (119 questions)
+## Exam 2 — Advanced ML4T (154 questions)
 
 | Topic | Count |
 |-------|------:|
 | RL Fundamentals (MDPs, Policy, Value) | 10 |
 | Q-Learning | 10 |
 | Dyna-Q (Model-Based Planning) | 6 |
-| RL Applied to Trading | 6 |
+| RL Applied to Trading | 9 |
 | Efficient Markets Hypothesis | 8 |
 | Grinold's Fundamental Law | 7 |
 | MVO & Efficient Frontier | 8 |
-| Market Simulator & Backtesting | 7 |
+| Market Simulator & Backtesting | 9 |
 | Time Series & TA Indicators | 8 |
-| Data Handling (Splits, Dividends, Survivor Bias) | 5 |
+| Data Handling (Splits, Dividends, Survivor Bias) | 9 |
 | Deep Learning (NNs, CNNs, RNNs) | 10 |
-| Generative AI & Transformers | 6 |
-| Algorithmic Bias & Fairness | 6 |
-| Options & Derivatives | 7 |
-| Quantitative Practice (Kamel Interview) | 6 |
+| Generative AI & Transformers | 12 |
+| Algorithmic Bias & Fairness | 12 |
+| Options & Derivatives | 12 |
+| Quantitative Practice (Kamel Interview) | 10 |
 | ML for Execution (Microstructure) | 5 |
-| AI Infrastructure in Investments | 4 |
+| AI Infrastructure in Investments | 9 |
 
 Exam 2 is graduate-level, drawing from Mitchell's RL chapter, ISLP Ch. 10 (Deep Learning), the CFA Handbook of AI and Big Data, and the ML4T course materials on reinforcement learning, efficient markets, portfolio optimization, options, and generative AI.
 

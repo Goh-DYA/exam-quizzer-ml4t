@@ -1,8 +1,8 @@
 {
   "version": "1.0",
   "metadata": {
-    "totalQuestions": 119,
-    "lastUpdated": "2026-04-26",
+    "totalQuestions": 154,
+    "lastUpdated": "2026-04-30",
     "exam": "exam2",
     "topics": [
       {
@@ -4087,6 +4087,1056 @@
         "d"
       ],
       "explanation": "(e) is the opposite of best practice. Financial-model decay is fast and well-documented; continuous monitoring and periodic retraining are essential for any long-running deployment. (a) is wrong — models decay over time and continuous monitoring is essential."
+    },
+    {
+      "id": 120,
+      "topic": "generative-ai",
+      "difficulty": "medium",
+      "question": "The history of AI has been punctuated by periods of reduced funding and stagnation called 'AI Winters.' Consider the following statements about what caused the first major AI winter and the subsequent resurgence:",
+      "options": [
+        {
+          "id": "a",
+          "text": "The first AI winter was partly triggered by the extrapolation fallacy: because single-node perceptrons were limited, the community incorrectly concluded the entire neural network paradigm was fundamentally flawed"
+        },
+        {
+          "id": "b",
+          "text": "The lack of computational power ('compute') and large datasets made training deeper neural networks impossible in the early era, regardless of theoretical soundness"
+        },
+        {
+          "id": "c",
+          "text": "The introduction of backpropagation in the 1980s allowed multi-layer networks to update weights via gradient calculation, planting the seeds for modern deep learning"
+        },
+        {
+          "id": "d",
+          "text": "AI winters were caused solely by mathematical proofs that neural networks could never approximate complex functions"
+        },
+        {
+          "id": "e",
+          "text": "The 2017 'Attention Is All You Need' paper ended the second AI winter by introducing the first-ever neural network architecture"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — the Universal Approximation Theorem later proved multi-layer nets CAN approximate complex functions; the winter was about hardware/data limitations and psychological disillusionment, not a proof of impossibility. (e) is wrong — Transformers (2017) built upon decades of neural network research (CNNs, RNNs); they were not the first neural architecture, and the second winter had ended much earlier with Hinton's deep learning breakthroughs in the 2000s."
+    },
+    {
+      "id": 121,
+      "topic": "generative-ai",
+      "difficulty": "hard",
+      "question": "Diffusion models are a class of generative models used for image synthesis. Consider the following statements about how diffusion models work:",
+      "options": [
+        {
+          "id": "a",
+          "text": "The forward process incrementally adds Gaussian noise to a training image over many steps until it becomes pure random noise"
+        },
+        {
+          "id": "b",
+          "text": "The neural network is trained to perform the reverse process: learning to denoise a noisy image step-by-step to recover coherent structure"
+        },
+        {
+          "id": "c",
+          "text": "To generate a new image, the model starts from pure random noise and iteratively applies its learned denoising, optionally guided by a text prompt"
+        },
+        {
+          "id": "d",
+          "text": "Diffusion models generate images in a single forward pass, making them faster than autoregressive models"
+        },
+        {
+          "id": "e",
+          "text": "The forward (noising) process requires learned parameters and is the most computationally expensive phase of training"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — diffusion models require many iterative denoising steps (often 20-1000), making them relatively slow compared to single-pass generators like GANs. (e) is wrong — the forward process is a fixed, parameter-free schedule of adding Gaussian noise; it requires no learning. All computation is spent training the reverse (denoising) network."
+    },
+    {
+      "id": 122,
+      "topic": "generative-ai",
+      "difficulty": "hard",
+      "question": "A core distinction in machine learning is between evaluative (discriminative) models and generative models. Consider the following statements about their mathematical objectives and capabilities:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Evaluative (discriminative) models maximize P(y|X) — the probability of a label given input features — to draw classification boundaries"
+        },
+        {
+          "id": "b",
+          "text": "Generative models learn P(X) or P(X,Y) — the underlying probability distribution of the data itself — enabling them to synthesize new data points"
+        },
+        {
+          "id": "c",
+          "text": "A generative model can be conceptualized as 'The Artist' that internalizes rules of composition to create new works, whereas an evaluative model is 'The Appraiser' that categorizes existing works"
+        },
+        {
+          "id": "d",
+          "text": "Since generative models learn P(X), they cannot perform classification tasks; only discriminative models can assign labels"
+        },
+        {
+          "id": "e",
+          "text": "Evaluative models that learn P(y|X) can also generate new synthetic data points by sampling from their learned distribution"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — generative models CAN perform classification via Bayes' rule: P(y|X) = P(X|y)P(y)/P(X). Learning P(X,Y) allows computing P(y|X). (e) is wrong — discriminative models only learn the decision boundary P(y|X), not the data distribution P(X), so they cannot generate new realistic data points."
+    },
+    {
+      "id": 123,
+      "topic": "generative-ai",
+      "difficulty": "medium",
+      "question": "The AI industry is transitioning from simple 'assistant' models to 'agentic' AI frameworks. Consider the following statements about this paradigm shift:",
+      "options": [
+        {
+          "id": "a",
+          "text": "An AI assistant provides a single response to a prompt and then waits for the user to take action, whereas an AI agent autonomously breaks objectives into sub-tasks and executes multi-step workflows"
+        },
+        {
+          "id": "b",
+          "text": "Agentic AI systems can call external APIs, verify success of actions, and iterate on failures without requiring human intervention at each step"
+        },
+        {
+          "id": "c",
+          "text": "Agentic AI systems eliminate all need for human oversight since they are capable of autonomous decision-making"
+        },
+        {
+          "id": "d",
+          "text": "The evolution from assistants to agents represents a shift from single-turn generation to multi-step planning, tool use, and memory"
+        },
+        {
+          "id": "e",
+          "text": "Agentic AI is simply a marketing term for larger language models with more parameters; no architectural difference exists"
+        }
+      ],
+      "correctAnswers": ["a", "b", "d"],
+      "explanation": "(c) is wrong — agentic AI still requires guardrails and human-in-the-loop oversight, especially for high-stakes decisions; autonomy does not mean the elimination of all human control. (e) is wrong — agentic AI involves fundamental architectural additions (tool-calling, planning loops, memory, retrieval) beyond simply scaling model parameters."
+    },
+    {
+      "id": 124,
+      "topic": "generative-ai",
+      "difficulty": "medium",
+      "question": "Edge AI and Small Language Models (SLMs) represent a push to run AI models locally on constrained devices rather than in cloud data centers. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Edge AI reduces inference latency by eliminating network round-trips to remote servers"
+        },
+        {
+          "id": "b",
+          "text": "Running models on-device provides privacy benefits because user data does not leave the local hardware"
+        },
+        {
+          "id": "c",
+          "text": "Small Language Models trade some capability for efficiency, enabling deployment on resource-constrained hardware like smartphones and embedded systems"
+        },
+        {
+          "id": "d",
+          "text": "Edge AI models always outperform cloud-hosted large models in accuracy because on-device models have access to more personal context"
+        },
+        {
+          "id": "e",
+          "text": "Quantization and model distillation are techniques that have zero impact on model quality, making SLMs identical to their large counterparts"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — cloud-hosted large models typically have superior accuracy due to greater capacity; edge models sacrifice some quality for latency and privacy benefits. (e) is wrong — quantization (reducing precision from float32 to int8/int4) and distillation inherently involve a quality-efficiency tradeoff; while modern techniques minimize degradation, some capability loss is unavoidable."
+    },
+    {
+      "id": 125,
+      "topic": "generative-ai",
+      "difficulty": "hard",
+      "question": "Generative AI introduces distinct security and safety risks due to the nature of probabilistic generation. Consider the following statements about these risks:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Hallucinations occur because generative models predict statistically likely tokens rather than accessing a database of verified facts, producing confident but fabricated outputs"
+        },
+        {
+          "id": "b",
+          "text": "A model's generated distribution will mirror biases present in its training data, since it learns P(X) from internet-scale text that contains human prejudices"
+        },
+        {
+          "id": "c",
+          "text": "The ability to synthesize realistic text, audio, and video at scale lowers the cost of sophisticated phishing attacks, deepfakes, and misinformation campaigns"
+        },
+        {
+          "id": "d",
+          "text": "RLHF (Reinforcement Learning from Human Feedback) completely eliminates hallucinations by providing the model with a verified knowledge base"
+        },
+        {
+          "id": "e",
+          "text": "Bias in generative outputs is easily eliminated by removing demographic keywords from the training data"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — RLHF reduces harmful outputs and improves alignment but does NOT eliminate hallucinations; the model still lacks a ground-truth database and generates probabilistically. (e) is wrong — bias is deeply embedded in correlations, word co-occurrences, and context patterns throughout training data; simple keyword removal fails to address structural biases and can introduce new distortions."
+    },
+    {
+      "id": 126,
+      "topic": "algorithmic-bias",
+      "difficulty": "hard",
+      "question": "Chouldechova's impossibility theorem establishes fundamental mathematical constraints on algorithmic fairness. Consider the following statements about this result:",
+      "options": [
+        {
+          "id": "a",
+          "text": "When base rates (prevalence of the positive class) differ between demographic groups, it is mathematically impossible to simultaneously achieve calibration, equal false positive rates, AND equal false negative rates"
+        },
+        {
+          "id": "b",
+          "text": "The theorem forces practitioners to make explicit ethical choices about which fairness criterion to prioritize, as satisfying all criteria simultaneously is provably impossible with unequal base rates"
+        },
+        {
+          "id": "c",
+          "text": "The impossibility result holds regardless of how sophisticated the algorithm is — no amount of additional data or model complexity can circumvent the mathematical constraint"
+        },
+        {
+          "id": "d",
+          "text": "With sufficiently large training datasets, all three fairness criteria can always be satisfied simultaneously, making the theorem only relevant for small-sample problems"
+        },
+        {
+          "id": "e",
+          "text": "The theorem proves that algorithmic fairness is fundamentally impossible and therefore should be entirely abandoned as a goal"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — the impossibility is a mathematical theorem about base rates, not a sample-size issue; more data cannot overcome the fundamental constraint when group base rates differ. (e) is wrong — the theorem does not argue fairness is pointless; it argues practitioners must choose which fairness criterion is most important for their domain, rather than naively assuming all can be achieved."
+    },
+    {
+      "id": 127,
+      "topic": "algorithmic-bias",
+      "difficulty": "medium",
+      "question": "Measurement bias occurs when proxy variables systematically mismeasure the concept of interest for certain groups. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Using 'prior arrests' as a proxy for 'criminal behavior' introduces measurement bias because over-policed communities will have inflated arrest counts that do not reflect actual crime rates"
+        },
+        {
+          "id": "b",
+          "text": "Measurement bias can exist even when data collection is complete and unbiased — the issue is that the feature-to-construct mapping differs systematically across groups"
+        },
+        {
+          "id": "c",
+          "text": "A proxy variable that is valid and accurate for one demographic group can be systematically misleading for another group"
+        },
+        {
+          "id": "d",
+          "text": "Measurement bias is eliminated simply by collecting more data from underrepresented groups"
+        },
+        {
+          "id": "e",
+          "text": "Using purely objective numerical features (such as counts or durations) guarantees the absence of measurement bias"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — measurement bias is about the validity of the proxy, not sample size; more data from an over-policed community still produces biased arrest-count proxies. (e) is wrong — 'objective' numerical features can still be biased proxies (e.g., arrest counts are objective numbers but biased measures of criminality when policing is uneven across groups)."
+    },
+    {
+      "id": 128,
+      "topic": "algorithmic-bias",
+      "difficulty": "medium",
+      "question": "Aggregation bias occurs when a single model is applied to a heterogeneous population containing distinct subgroups that may require different models. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "A 'one-size-fits-all' model can perform well on average across the entire population but poorly for specific subgroups whose patterns differ from the majority"
+        },
+        {
+          "id": "b",
+          "text": "An example of aggregation bias is using the same HbA1c threshold to diagnose diabetes across all ethnicities, despite known biological variations in this biomarker"
+        },
+        {
+          "id": "c",
+          "text": "Disaggregating performance metrics by subgroup can reveal hidden disparities that aggregate accuracy metrics conceal"
+        },
+        {
+          "id": "d",
+          "text": "Aggregation bias is solved by simply removing protected attributes (race, gender) from the feature set"
+        },
+        {
+          "id": "e",
+          "text": "Aggregation bias only affects datasets with fewer than 1000 samples and is irrelevant for large-scale machine learning"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — removing protected attributes does not eliminate aggregation bias because the underlying heterogeneity still exists; the single model still cannot capture subgroup-specific patterns. (e) is wrong — aggregation bias is about population heterogeneity, not sample size; even with millions of samples, a single model can systematically misserve subgroups."
+    },
+    {
+      "id": 129,
+      "topic": "algorithmic-bias",
+      "difficulty": "hard",
+      "question": "The concept of a 'deployment crisis' argues that ML systems must be evaluated as complete sociotechnical systems, not just narrow algorithms. Consider the following statements about safe deployment:",
+      "options": [
+        {
+          "id": "a",
+          "text": "A model achieving 99% aggregate accuracy can still be unsafe if the 1% error mode is catastrophic and the user interface fails to communicate uncertainty"
+        },
+        {
+          "id": "b",
+          "text": "Uncertainty quantification allows a system to output confidence intervals alongside predictions, enabling human operators to know when to trust or override the model"
+        },
+        {
+          "id": "c",
+          "text": "Historical engineering disasters (e.g., Therac-25 radiation machine) demonstrate that failures often result from system-level integration issues, not a lack of core algorithmic functionality"
+        },
+        {
+          "id": "d",
+          "text": "If a model passes its held-out test set with high accuracy, it requires no additional review or monitoring before real-world deployment"
+        },
+        {
+          "id": "e",
+          "text": "A 95% accuracy score guarantees the system is safe for deployment because the vast majority of predictions will be correct"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — test-set performance is necessary but not sufficient; the system must also be audited for subgroup fairness, adversarial robustness, and integration with human workflows before deployment. (e) is wrong — accuracy says nothing about the distribution or severity of errors; if the 5% failures cluster in safety-critical cases, the system can cause serious harm despite high aggregate accuracy."
+    },
+    {
+      "id": 130,
+      "topic": "algorithmic-bias",
+      "difficulty": "medium",
+      "question": "Robust ML systems require continuous monitoring after deployment, including data unit testing and drift detection. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Data unit tests verify that incoming data conforms to expected schemas, distributions, and value ranges — analogous to code unit tests in software engineering"
+        },
+        {
+          "id": "b",
+          "text": "Data drift occurs when the distribution of input features shifts over time, even if the underlying target relationship remains stable"
+        },
+        {
+          "id": "c",
+          "text": "A model proven mathematically fair at deployment time (t=0) can become significantly biased by time t=10 due to feedback loops between its predictions and the data it generates"
+        },
+        {
+          "id": "d",
+          "text": "Data quality is only a concern during initial model training; once deployed, input data quality is guaranteed by the production system"
+        },
+        {
+          "id": "e",
+          "text": "If the model was well-validated at launch, drift detection is unnecessary because the model will self-correct"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — upstream data sources can change schemas, introduce nulls, or shift distributions at any time; continuous data quality monitoring is essential. (e) is wrong — ML models do not self-correct; they silently degrade when input distributions shift, and without drift detection, performance can deteriorate unnoticed for extended periods."
+    },
+    {
+      "id": 131,
+      "topic": "algorithmic-bias",
+      "difficulty": "hard",
+      "question": "Constrained optimization for fairness reformulates ML training to include explicit fairness requirements. Consider the following statements about this approach:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fairness constraints can be mathematically encoded as: minimize loss subject to |Fairness_Metric(Group_0) − Fairness_Metric(Group_1)| ≤ ε, forcing the optimizer to find accurate-yet-fair solutions"
+        },
+        {
+          "id": "b",
+          "text": "There is typically a Pareto tradeoff between accuracy and fairness: enforcing stricter fairness constraints limits the model's hypothesis space, potentially increasing baseline error"
+        },
+        {
+          "id": "c",
+          "text": "The multi-objective system loss combines task accuracy, adversarial robustness, and fairness: L_system = L_task + λ₁·R_robust + λ₂·Φ_fair, where λ values represent explicit ethical/safety weights"
+        },
+        {
+          "id": "d",
+          "text": "Adding fairness constraints always improves model accuracy because fairer models generalize better"
+        },
+        {
+          "id": "e",
+          "text": "There is never a tradeoff between accuracy and fairness — both can always be maximized simultaneously with the right algorithm"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — while regularization can sometimes improve generalization, fairness constraints typically restrict the hypothesis space and increase training loss; improved accuracy is not guaranteed. (e) is wrong — Chouldechova's impossibility theorem and empirical evidence both demonstrate real tradeoffs; the λ weights in multi-objective optimization represent exactly this tension."
+    },
+    {
+      "id": 132,
+      "topic": "options",
+      "difficulty": "medium",
+      "question": "A covered call strategy involves owning stock while simultaneously writing (selling) a call option against those shares. Consider the three possible outcomes at expiration:",
+      "options": [
+        {
+          "id": "a",
+          "text": "If the stock rises above the strike price, the shares are 'called away' — the writer sells at the strike price, caps their upside profit, but still profits from strike minus purchase price plus the premium collected"
+        },
+        {
+          "id": "b",
+          "text": "The ideal outcome for a covered call writer is the stock rising slightly but staying just below the strike — they keep the shares, keep the full premium, and can write new calls"
+        },
+        {
+          "id": "c",
+          "text": "If the stock declines significantly, the premium collected provides only a small cushion against losses, and the writer bears the full downside of stock ownership minus only the premium"
+        },
+        {
+          "id": "d",
+          "text": "A covered call fully protects the writer against downside losses because the premium received compensates for any stock decline"
+        },
+        {
+          "id": "e",
+          "text": "The covered call writer profits most when the stock rises far above the strike price, because they participate fully in the upside"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — the premium provides only a small buffer (typically 2-5% of stock price); if the stock drops 20-50%, the premium offset is minimal and the writer suffers large losses. (e) is wrong — when the stock rises far above the strike, the writer's shares are called away AT the strike price; all gains above the strike belong to the option buyer, so the writer's profit is capped."
+    },
+    {
+      "id": 133,
+      "topic": "options",
+      "difficulty": "hard",
+      "question": "An iron condor is an advanced options strategy that combines a bull put spread and a bear call spread. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "An iron condor profits when the underlying asset stays between the two short (sold) strike prices through expiration, as all four options expire worthless and the trader keeps the net premium"
+        },
+        {
+          "id": "b",
+          "text": "Maximum profit equals the net premium collected at trade entry, and maximum loss is the width of the wider spread minus the net premium received"
+        },
+        {
+          "id": "c",
+          "text": "It is a defined-risk, defined-reward strategy that benefits from low volatility and range-bound price action"
+        },
+        {
+          "id": "d",
+          "text": "An iron condor has unlimited upside profit potential because it includes a long call component"
+        },
+        {
+          "id": "e",
+          "text": "Iron condors profit primarily from large directional moves in the underlying, making them ideal for momentum-driven markets"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — an iron condor has strictly defined maximum profit (the net premium collected); both wings cap the P&L in both directions. (e) is wrong — iron condors LOSE money on large directional moves; they profit from the underlying staying within a range (low volatility), which is the exact opposite of momentum-driven markets."
+    },
+    {
+      "id": 134,
+      "topic": "options",
+      "difficulty": "hard",
+      "question": "A broken wing butterfly is a variation of the standard butterfly spread with asymmetrical strike intervals. Consider the following statements about this strategy:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Unlike a standard symmetric butterfly, a broken wing intentionally skews the strike intervals to favor the stock moving in one direction over another"
+        },
+        {
+          "id": "b",
+          "text": "The asymmetry eliminates risk on one side of the trade (where the wing is widened) while increasing maximum loss on the other side"
+        },
+        {
+          "id": "c",
+          "text": "A broken wing butterfly can sometimes be entered for a net credit, unlike a standard butterfly which typically requires a net debit"
+        },
+        {
+          "id": "d",
+          "text": "A broken wing butterfly has identical risk on both sides and is functionally equivalent to a standard symmetric butterfly"
+        },
+        {
+          "id": "e",
+          "text": "The 'broken wing' name comes from the strategy having only two legs instead of the standard butterfly's three or four legs"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — the entire point of a broken wing butterfly is that it is NOT symmetrical; the asymmetric strikes create unequal risk on the two sides, allowing directional bias. (e) is wrong — a broken wing butterfly still has the same number of legs (three or four contracts) as a standard butterfly; the 'broken wing' refers to one wing of the P&L graph sitting higher than the other due to asymmetric strike spacing."
+    },
+    {
+      "id": 135,
+      "topic": "options",
+      "difficulty": "medium",
+      "question": "Unlike buying stocks, which only requires predicting direction, options trading demands correct predictions across multiple dimensions. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "An options trader must be correct about direction (will the stock go up or down), magnitude (will it move enough to overcome the premium), AND timing (will it happen before expiration)"
+        },
+        {
+          "id": "b",
+          "text": "A stock trader who is correct about direction always profits eventually (assuming no bankruptcy), since stocks have no expiration date and the position can be held indefinitely"
+        },
+        {
+          "id": "c",
+          "text": "An option buyer can lose their entire investment (the premium) even if the stock eventually moves in the predicted direction — if the move occurs after the expiration date"
+        },
+        {
+          "id": "d",
+          "text": "Options only require predicting direction, just like stocks — magnitude and timing are irrelevant because options can be rolled indefinitely"
+        },
+        {
+          "id": "e",
+          "text": "Time value decay is irrelevant for option buyers because they can always exercise early to avoid losses"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — rolling an option involves closing the current position (crystallizing a loss) and opening a new one; this is a new trade with new premium cost, not a free extension. The original trade still required correct magnitude/timing. (e) is wrong — early exercise forfeits all remaining time value; an option buyer who exercises early to 'avoid decay' gives up the time value they already paid for. Time decay is an inherent cost of holding long options."
+    },
+    {
+      "id": 136,
+      "topic": "options",
+      "difficulty": "medium",
+      "question": "Options provide capital efficiency (leverage) compared to direct stock ownership. Consider the following comparison between buying 100 shares of a $110 stock versus buying one call option contract (strike $110, premium $2.73/share):",
+      "options": [
+        {
+          "id": "a",
+          "text": "Buying 100 shares requires $11,000 in capital, while the call option requires only $273 — controlling the same 100-share exposure at a fraction of the cost"
+        },
+        {
+          "id": "b",
+          "text": "If the stock drops to $100, the stockholder loses $1,000 while the option buyer's maximum loss is capped at $273 (the premium paid)"
+        },
+        {
+          "id": "c",
+          "text": "The tradeoff for this capital efficiency is that complete loss of the option investment (100% of premium) is far more common than complete loss with stock ownership"
+        },
+        {
+          "id": "d",
+          "text": "Options always require more capital than stocks because the contract multiplier (100 shares) amplifies the cost beyond the underlying stock price"
+        },
+        {
+          "id": "e",
+          "text": "The leverage provided by options reduces risk compared to holding the equivalent stock position because less capital is at stake"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — options require LESS capital (a $2.73 premium vs. $110 share price for equivalent exposure); the contract multiplier means one contract controls 100 shares, but the total cost ($273) is still far less than buying 100 shares ($11,000). (e) is wrong — while less total capital is at stake, the PROBABILITY of total loss is much higher with options (all premium lost if OTM at expiration); leverage amplifies percentage returns in both directions, making options riskier on a per-dollar basis."
+    },
+    {
+      "id": 137,
+      "topic": "ai-infrastructure",
+      "difficulty": "medium",
+      "question": "Modern financial data platforms must store and serve billions of time-series data points to quantitative analysts. Consider the following statements about the infrastructure choices:",
+      "options": [
+        {
+          "id": "a",
+          "text": "At the scale of 15-16 million time series containing billions of data points, NoSQL databases are preferred because conventional relational databases become difficult to manage and optimize for rapidly delivering vast amounts of numerical data"
+        },
+        {
+          "id": "b",
+          "text": "Data platforms deliver data to hedge funds via APIs, allowing analysts to pull data directly into Python, R, MATLAB, or Stata for their quantitative workflows"
+        },
+        {
+          "id": "c",
+          "text": "The platform's own consumer-facing website is designed as another client consuming the same underlying API — the same interface serves both human users and programmatic access"
+        },
+        {
+          "id": "d",
+          "text": "SQL databases are always superior for financial data regardless of scale because they provide stronger consistency guarantees needed for trading"
+        },
+        {
+          "id": "e",
+          "text": "The primary engineering challenge for data platforms is building innovative custom infrastructure rather than maintaining dataset accuracy"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — while SQL provides strong ACID guarantees, at the scale of tens of billions of data points, the performance bottleneck of relational databases for time-series delivery becomes prohibitive; NoSQL stores trade some consistency for scalability. (e) is wrong — the interview with Tammer Kamel emphasizes that the primary engineering effort is maintaining dataset ACCURACY, using 'plain vanilla, conventional best practices' for infrastructure rather than innovating on the technology stack."
+    },
+    {
+      "id": 138,
+      "topic": "ai-infrastructure",
+      "difficulty": "medium",
+      "question": "Deploying ML models in production requires careful API and serving infrastructure design. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Model versioning enables A/B testing between model iterations and safe rollback if a new model underperforms in production"
+        },
+        {
+          "id": "b",
+          "text": "Real-time inference requires sub-second latency, which constrains model complexity — simpler models or distilled versions may be needed for serving"
+        },
+        {
+          "id": "c",
+          "text": "Batch inference processes large datasets efficiently (e.g., overnight signal generation) but introduces staleness — predictions may be hours old by execution time"
+        },
+        {
+          "id": "d",
+          "text": "A single API endpoint serving all model versions simultaneously is best practice because it simplifies the client's code"
+        },
+        {
+          "id": "e",
+          "text": "Latency is irrelevant for trading applications because all decisions are made on daily or longer timeframes"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — mixing model versions on a single endpoint makes it impossible to attribute performance, run controlled experiments, or roll back cleanly; versioned endpoints are standard practice. (e) is wrong — many quantitative strategies operate on intraday or even sub-second timeframes where latency directly impacts execution quality and alpha capture."
+    },
+    {
+      "id": 139,
+      "topic": "ai-infrastructure",
+      "difficulty": "hard",
+      "question": "The canonical daily cycle for quantitative analysts involves a sequential pipeline from data ingestion to trade execution. Consider the following statements about this workflow:",
+      "options": [
+        {
+          "id": "a",
+          "text": "The standard daily workflow proceeds sequentially: (1) model calibration on historical data, (2) new market data ingestion after close, (3) overnight signal processing, (4) trade execution the following day"
+        },
+        {
+          "id": "b",
+          "text": "Pipeline failures at early stages (e.g., missing market data) invalidate all downstream outputs — if ingestion fails, signals and execution must be halted"
+        },
+        {
+          "id": "c",
+          "text": "Data providers often require a brief delay after market close before data becomes available, because OHLCV calculations and adjustments must be finalized"
+        },
+        {
+          "id": "d",
+          "text": "Each stage of the daily cycle runs independently without dependencies, so a failure in data ingestion does not affect downstream signal generation"
+        },
+        {
+          "id": "e",
+          "text": "The canonical daily cycle only applies to high-frequency trading firms and is irrelevant for fundamental or daily-rebalancing strategies"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — the daily cycle is explicitly sequential and dependent: signals require clean data, and execution requires valid signals. A break at any stage corrupts everything downstream. (e) is wrong — the canonical daily cycle (ingest → process → execute) is the standard workflow for any systematic strategy that trades on daily data, from fundamental quant to daily-rebalancing momentum strategies."
+    },
+    {
+      "id": 140,
+      "topic": "ai-infrastructure",
+      "difficulty": "medium",
+      "question": "Cloud infrastructure for ML training involves choices about compute resources, cost optimization, and distributed systems. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Spot/preemptible GPU instances significantly reduce training cost but require fault-tolerant designs with checkpointing, since instances can be reclaimed at any time"
+        },
+        {
+          "id": "b",
+          "text": "Distributed training across multiple GPUs introduces communication overhead (gradient synchronization) that can negate scaling benefits if the model or batch size is too small"
+        },
+        {
+          "id": "c",
+          "text": "Experiment tracking (logging hyperparameters, metrics, and artifacts per run) is essential for reproducibility and understanding which changes improved performance"
+        },
+        {
+          "id": "d",
+          "text": "Adding more GPUs always reduces training time linearly — doubling GPUs always halves training time regardless of model architecture"
+        },
+        {
+          "id": "e",
+          "text": "Cloud training eliminates all data management concerns because the provider handles data versioning, quality, and access control automatically"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — Amdahl's law and communication overhead mean that scaling efficiency decreases as GPU count increases; gradient synchronization, memory bottlenecks, and sequential operations limit parallelization. (e) is wrong — cloud providers supply infrastructure (storage, compute) but data management (versioning, quality checks, access control, bias auditing) remains the responsibility of the ML team."
+    },
+    {
+      "id": 141,
+      "topic": "ai-infrastructure",
+      "difficulty": "hard",
+      "question": "Point-in-time (PIT) data and revised data represent two approaches to historical data, with critical implications for backtesting integrity. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Point-in-time data captures exactly what was known at each historical moment, including initial errors that were later corrected — this is the gold standard for backtesting"
+        },
+        {
+          "id": "b",
+          "text": "Using revised/restated data in backtests creates look-ahead bias because the corrected values contain information that was unavailable at the time of the simulated trading decision"
+        },
+        {
+          "id": "c",
+          "text": "For corporate earnings data, providers often supply both PIT ('as reported') and revised versions — the PIT version must be used for predictive backtesting"
+        },
+        {
+          "id": "d",
+          "text": "Revised data is always more accurate and therefore always better for backtesting, since it corrects errors in the original data"
+        },
+        {
+          "id": "e",
+          "text": "Look-ahead bias from using revised data is negligible in practice and only matters for academic research, not real trading strategies"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — while revised data IS more accurate about what ACTUALLY happened, it introduces look-ahead bias when used for backtesting because a trader at the historical moment could not have known the revision. Accuracy for analysis ≠ validity for backtesting. (e) is wrong — look-ahead bias from revised data can create massive false alpha, especially for strategies based on earnings surprises or macroeconomic releases where revisions are large and frequent."
+    },
+    {
+      "id": 142,
+      "topic": "quant-practice",
+      "difficulty": "hard",
+      "question": "In the 1990s, advanced statistical arbitrage (StatArb) utilized Principal Component Analysis (PCA) and eigenvalue decomposition on stock returns. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "PCA decomposes the return covariance matrix into orthogonal factors (eigenvectors); the first eigenportfolio typically corresponds to the overall market factor"
+        },
+        {
+          "id": "b",
+          "text": "After removing the first few principal components (market and sector factors), the residual returns form the basis for statistical arbitrage — traders bet these residuals will mean-revert"
+        },
+        {
+          "id": "c",
+          "text": "StatArb and yield curve arbitrage strategies thrived in high-volatility environments with significant interstock dispersion; modern lower-volatility markets have severely handicapped these models"
+        },
+        {
+          "id": "d",
+          "text": "PCA guarantees profitable trades on the residual returns because eigenvalue decomposition reveals true arbitrage opportunities with zero risk"
+        },
+        {
+          "id": "e",
+          "text": "The first principal component always represents a specific industry sector (e.g., technology) rather than a broad market factor"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — PCA identifies statistical relationships, not guaranteed arbitrage; residuals may appear mean-reverting in sample but can diverge permanently in live markets. The 'quant quake' of 2007 demonstrated catastrophic failure of crowded StatArb strategies. (e) is wrong — the first principal component of a broad stock universe almost always represents the overall market direction (beta); sector factors typically appear as the 2nd, 3rd, or later components."
+    },
+    {
+      "id": 143,
+      "topic": "quant-practice",
+      "difficulty": "medium",
+      "question": "Modern quantitative finance increasingly relies on alternative data, and marketplace dynamics affect data quality. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Alpha from traditional price/volume data has largely evaporated because the market has fully priced in this information — new alpha requires alternative data sources"
+        },
+        {
+          "id": "b",
+          "text": "A data marketplace with multiple competing vendors drives quality improvement because publishers are motivated to rapidly correct errors to retain paying subscribers"
+        },
+        {
+          "id": "c",
+          "text": "Once many funds access the same alternative data source, the alpha derived from it decays as the informational advantage is competed away"
+        },
+        {
+          "id": "d",
+          "text": "A monopoly data vendor always produces the highest quality data because they have the most resources for quality control"
+        },
+        {
+          "id": "e",
+          "text": "Alternative data alpha never decays because the data is proprietary and cannot be replicated by competitors"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — monopoly vendors lack competitive pressure to maintain quality; the marketplace model with competition and transparent publisher accountability incentivizes faster error correction. (e) is wrong — alpha decays regardless of data propriety; as more participants access similar signals (even through different providers), the mispricing they exploit gets traded away."
+    },
+    {
+      "id": 144,
+      "topic": "quant-practice",
+      "difficulty": "hard",
+      "question": "The iterative calibration trap is a critical statistical error in quantitative strategy design. Consider the following statements about this pitfall and the rules for strategy validation:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Repeatedly tweaking model parameters on the same historical dataset until the backtest shows profit is classic curve-fitting — the model learns noise rather than signal"
+        },
+        {
+          "id": "b",
+          "text": "A valid strategy must be grounded in economic/financial theory BEFORE empirical testing — if you cannot explain why the market mechanism exists, the strategy is likely overfitted"
+        },
+        {
+          "id": "c",
+          "text": "Each iteration of 'calibrate → evaluate → adjust' on the same data implicitly leaks test information into the model, inflating the probability of finding spurious patterns"
+        },
+        {
+          "id": "d",
+          "text": "Iterating on the same dataset is perfectly valid as long as the final backtest Sharpe ratio exceeds 2.0, which proves the signal is genuine"
+        },
+        {
+          "id": "e",
+          "text": "Theoretical soundness and economic intuition are unnecessary if the strategy has been profitable in out-of-sample walk-forward testing"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — a high Sharpe ratio achieved through iterative calibration on the same data is the hallmark of overfitting; the Sharpe ratio reflects how well the model memorized noise, not predictive power. Out-of-sample testing is required. (e) is wrong — even walk-forward profitability can result from data-mining bias if the analyst tested hundreds of variations; theoretical soundness provides a prior that the pattern is genuine and not coincidental."
+    },
+    {
+      "id": 145,
+      "topic": "quant-practice",
+      "difficulty": "medium",
+      "question": "The coin-flipping casino thought experiment illustrates Grinold's Fundamental Law. Imagine a casino with 1000 tables, each with a biased coin (51% heads). You have 1000 tokens. Consider the following statements about betting strategies:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Betting all 1000 tokens on one table versus 1 token on each of 1000 tables yields the same expected return ($20), but the multi-bet approach has dramatically lower variance"
+        },
+        {
+          "id": "b",
+          "text": "The risk-adjusted reward (Sharpe equivalent) of the multi-bet approach is approximately sqrt(1000) ≈ 31.6 times higher than the single-bet approach, despite identical expected returns"
+        },
+        {
+          "id": "c",
+          "text": "This demonstrates why breadth (number of independent bets) increases the information ratio via IR = IC × sqrt(BR) — even low-skill strategies can achieve high performance through massive breadth"
+        },
+        {
+          "id": "d",
+          "text": "Both betting approaches have identical risk since the total capital at stake ($1000) is the same in both cases"
+        },
+        {
+          "id": "e",
+          "text": "Risk grows linearly with the number of bets, meaning the 1000-bet approach is 1000 times riskier than the single-bet approach"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — risk measured as standard deviation of outcomes is $31.62 for the single bet (extreme variance) vs $1.0 for the multi-bet (tightly distributed around expected value). Same capital does NOT mean same risk. (e) is wrong — risk (standard deviation) grows with sqrt(N), not N; the 1000-bet approach has risk of approximately $1 (sqrt of individual bet variance), while the single bet has risk of approximately $31.62."
+    },
+    {
+      "id": 146,
+      "topic": "data-handling",
+      "difficulty": "hard",
+      "question": "Adjusted close prices depend on the reference date from which they are calculated, creating a subtle but important issue for data management. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Adjusted close is always calculated BACKWARDS from today's actual close price — today's adjusted close always equals today's actual close"
+        },
+        {
+          "id": "b",
+          "text": "If you download a stock's adjusted close on two different dates (e.g., January and March), the historical values for the same past date will DIFFER if any splits or dividends occurred between your two download dates"
+        },
+        {
+          "id": "c",
+          "text": "The 'reference date' is implicitly today (the download date), meaning adjusted close values are not permanent fixed numbers but shift with each new corporate action"
+        },
+        {
+          "id": "d",
+          "text": "Adjusted close values are fixed permanently once calculated by the exchange and never change regardless of subsequent corporate actions"
+        },
+        {
+          "id": "e",
+          "text": "The reference date dependency only matters for stocks with splits; dividends do not affect the calculation of adjusted close"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — adjusted close is recalculated with every new split or dividend; downloading the same stock data a month apart will yield different historical adjusted prices if any corporate action occurred in between. (e) is wrong — dividends also affect adjusted close; pre-dividend prices are reduced by the proportional dividend amount, just as pre-split prices are divided by the split ratio."
+    },
+    {
+      "id": 147,
+      "topic": "data-handling",
+      "difficulty": "medium",
+      "question": "Survivorship bias is a critical pitfall in backtesting strategies against historical stock universes. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Using the current S&P 500 constituents to backtest a 20-year strategy introduces survivor bias because it excludes companies that were delisted, acquired, or went bankrupt during that period"
+        },
+        {
+          "id": "b",
+          "text": "Survivor bias systematically OVERSTATES historical returns because the worst-performing stocks (those that failed) are excluded from the backtest universe"
+        },
+        {
+          "id": "c",
+          "text": "The correct approach is to use the index membership as it existed at each historical point in time, which may include companies that subsequently failed"
+        },
+        {
+          "id": "d",
+          "text": "Survivorship bias understates returns because it removes high-performing companies that were acquired at premium valuations"
+        },
+        {
+          "id": "e",
+          "text": "Survivor bias only affects small-cap stock universes and is irrelevant when backtesting against the S&P 500"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — while acquisitions are excluded, the dominant effect is the removal of bankrupt/delisted stocks (which had terrible returns), creating a net upward bias in historical performance. (e) is wrong — survivor bias affects ANY index, including the S&P 500; approximately 68 companies were removed from the S&P 500 between 2007-2009 alone, and a backtest ignoring them would look unrealistically good."
+    },
+    {
+      "id": 148,
+      "topic": "data-handling",
+      "difficulty": "hard",
+      "question": "Dividend adjustments to historical close prices follow a specific proportional methodology. Consider a stock trading at $100/share that pays a $2 dividend. Evaluate the following statements about the adjustment:",
+      "options": [
+        {
+          "id": "a",
+          "text": "The adjustment factor is (Close − Dividend) / Close = ($100 − $2) / $100 = 0.98, and ALL historical prices before the ex-dividend date are multiplied by this factor"
+        },
+        {
+          "id": "b",
+          "text": "The adjustment is proportional (multiplicative), not absolute (subtractive) — a stock at $50 before the same dividend would be adjusted to $49 (×0.98), not $48 (−$2)"
+        },
+        {
+          "id": "c",
+          "text": "Multiple dividends compound multiplicatively: if two 2% dividends occur, pre-first-dividend prices are adjusted by 0.98 × 0.98 = 0.9604, progressively shrinking older adjusted prices"
+        },
+        {
+          "id": "d",
+          "text": "Dividend adjustment subtracts the dollar amount of the dividend from each prior close — a $2 dividend means all prior prices are reduced by exactly $2"
+        },
+        {
+          "id": "e",
+          "text": "Dividend adjustments are only applied to the single day before ex-dividend, not to the entire prior price history"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — the adjustment is PROPORTIONAL, not absolute; a $2 dividend on a $100 stock creates a 2% adjustment factor (0.98) applied to all prior prices. Subtracting $2 from all prior prices would be incorrect because it doesn't account for the relative magnitude. (e) is wrong — the adjustment applies to ALL prior historical prices, not just one day; this ensures the entire adjusted price series accurately reflects cumulative total returns including dividends."
+    },
+    {
+      "id": 149,
+      "topic": "data-handling",
+      "difficulty": "medium",
+      "question": "Raw financial market data arrives as individual ticks (trades) and is aggregated into OHLCV bars for analysis. Consider the following statements about this process:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Open is the price of the first transaction within the time window, Close is the price of the last transaction, High and Low are the extreme prices, and Volume is the sum of all shares traded"
+        },
+        {
+          "id": "b",
+          "text": "A tick represents a single successful match between a buyer and seller — there is no guarantee about the number of ticks in any given time slice, as they depend on trading activity"
+        },
+        {
+          "id": "c",
+          "text": "Shorter bar durations (e.g., 1-minute vs. daily) provide more granular data but also more noise, requiring faster computers and larger storage"
+        },
+        {
+          "id": "d",
+          "text": "OHLCV bars preserve all information from the raw tick data, allowing perfect reconstruction of the tick stream from the bars"
+        },
+        {
+          "id": "e",
+          "text": "Volume in an OHLCV bar counts the number of individual trades (transactions), not the total number of shares exchanged"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — OHLCV aggregation is inherently lossy; within each bar, the individual trade timestamps, individual trade sizes, and price path between open/close are discarded. You cannot reconstruct the tick stream from OHLCV data. (e) is wrong — Volume represents the TOTAL number of shares (or contracts) traded within the bar, not the count of trades. A single trade of 10,000 shares contributes 10,000 to volume, not 1."
+    },
+    {
+      "id": 150,
+      "topic": "rl-trading",
+      "difficulty": "medium",
+      "question": "Reinforcement learning applied to trading maps the RL framework (sense-think-act) onto market interactions. Consider the following statements about this mapping:",
+      "options": [
+        {
+          "id": "a",
+          "text": "'Sense' corresponds to observing market state features (technical indicators, current holdings, recent returns) that form the agent's state representation S"
+        },
+        {
+          "id": "b",
+          "text": "'Think' is the policy evaluation π(S) = A, where the agent's learned policy maps the current state to a trading action (BUY, SELL, or HOLD)"
+        },
+        {
+          "id": "c",
+          "text": "'Act' is executing the trade in the market environment; the environment then transitions to a new state and provides a reward (return) reflecting the action's quality"
+        },
+        {
+          "id": "d",
+          "text": "The sense-think-act cycle requires the agent to explicitly predict future stock prices as an intermediate step before selecting actions"
+        },
+        {
+          "id": "e",
+          "text": "The 'think' phase uses supervised learning labels (human-provided correct actions) rather than the agent's own learned policy"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — RL agents learn a policy that maps states DIRECTLY to actions without an explicit price prediction step; the agent learns which actions yield high rewards, not what prices will be. (e) is wrong — the fundamental distinction between RL and supervised learning is that RL learns from rewards (delayed, scalar feedback) rather than labeled correct actions; no human provides the 'right' trade at each step."
+    },
+    {
+      "id": 151,
+      "topic": "rl-trading",
+      "difficulty": "hard",
+      "question": "Designing the state representation for a tabular Q-learning trading agent requires careful discretization choices. Consider the following statements:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Finer discretization of continuous indicators (more bins) increases the state-space size exponentially when combining multiple features, due to the curse of dimensionality"
+        },
+        {
+          "id": "b",
+          "text": "Combining N indicators each with K discretization levels produces K^N possible states in the Q-table, making exploration of all state-action pairs infeasible for large N or K"
+        },
+        {
+          "id": "c",
+          "text": "Insufficient exploration of a large state space leads to unreliable Q-values in rarely-visited states, causing the agent to make poorly-informed decisions in those regions"
+        },
+        {
+          "id": "d",
+          "text": "More state features always improve the trading agent's performance because the agent has more information to make decisions"
+        },
+        {
+          "id": "e",
+          "text": "Continuous state spaces have no disadvantages over discrete ones for tabular Q-learning because the Q-table simply stores floating-point keys"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — more features exponentially expand the state space, diluting exploration across states and making convergence slower or impossible; in practice, a parsimonious state representation often outperforms a feature-rich one for tabular methods. (e) is wrong — tabular Q-learning requires discrete state indices for table lookup; continuous states with infinite possible values cannot be stored in a finite table, which is exactly why discretization is necessary."
+    },
+    {
+      "id": 152,
+      "topic": "rl-trading",
+      "difficulty": "hard",
+      "question": "The choice of reward signal fundamentally shapes what behavior a trading RL agent learns. Consider the following statements about different reward designs:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Using cumulative portfolio return only at episode end creates a very sparse reward signal, making it difficult for the agent to determine which intermediate actions contributed to the final outcome (credit assignment problem)"
+        },
+        {
+          "id": "b",
+          "text": "Using daily return per share held provides denser step-by-step feedback, enabling faster convergence because the agent receives informative signals at every timestep"
+        },
+        {
+          "id": "c",
+          "text": "A Sharpe-ratio-based reward penalizes high-volatility strategies even if they have positive expected return, causing the agent to learn risk-adjusted behavior rather than pure return maximization"
+        },
+        {
+          "id": "d",
+          "text": "All reward formulations produce the same optimal policy because the total accumulated reward over an episode is identical regardless of when it is delivered"
+        },
+        {
+          "id": "e",
+          "text": "Sparse rewards at episode end are always preferable because they provide the cleanest signal about the ultimate goal without confusing intermediate noise"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — different reward formulations shape agent behavior differently; a Sharpe-based reward produces risk-averse behavior while a cumulative-return reward produces risk-neutral behavior. The learned policies will differ substantially. (e) is wrong — while sparse rewards are theoretically cleaner, they create severe credit assignment difficulties in practice (which of 252 daily actions caused the outcome?), leading to very slow or failed convergence."
+    },
+    {
+      "id": 153,
+      "topic": "market-simulator",
+      "difficulty": "medium",
+      "question": "In the vectorized four-DataFrame approach to market simulation, cash is treated uniformly as an asset. Consider the following statements about this design:",
+      "options": [
+        {
+          "id": "a",
+          "text": "Cash is modeled as a column in the Prices DataFrame with a constant value of 1.0 (since $1 always equals $1), enabling uniform matrix operations"
+        },
+        {
+          "id": "b",
+          "text": "When buying shares, the cash column in the Trades DataFrame decreases by (Price × Shares) + Commission + (Price × Shares × Impact)"
+        },
+        {
+          "id": "c",
+          "text": "Market impact ALWAYS reduces cash on both buys and sells — it increases effective buy cost and decreases effective sell revenue, reflecting the liquidity cost of executing the trade"
+        },
+        {
+          "id": "d",
+          "text": "Cash is tracked separately from the DataFrame structure and requires special iterative logic that cannot be vectorized"
+        },
+        {
+          "id": "e",
+          "text": "Market impact increases cash on buy orders because buying pushes the price up, making the position immediately more valuable"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — the entire point of treating cash as a column with price=1.0 is that it can be processed identically to stock columns via vectorized operations (cumsum for holdings, element-wise multiply for values). (e) is wrong — market impact is a COST to the trader in both directions: when buying, you pay a higher effective price (reducing cash more); when selling, you receive a lower effective price (adding less cash). It always works against the trader."
+    },
+    {
+      "id": 154,
+      "topic": "market-simulator",
+      "difficulty": "medium",
+      "question": "The Sharpe Ratio must be properly annualized when computed from daily portfolio returns. Consider the following statements about the annualization process:",
+      "options": [
+        {
+          "id": "a",
+          "text": "The annualized Sharpe Ratio = sqrt(252) × (Mean(daily_returns) / StdDev(daily_returns)), where 252 represents the approximate number of trading days per year"
+        },
+        {
+          "id": "b",
+          "text": "The sqrt(252) scaling factor arises because returns scale linearly with time (T) while volatility scales with sqrt(T), assuming approximately i.i.d. daily returns"
+        },
+        {
+          "id": "c",
+          "text": "Using 365 (calendar days) instead of 252 (trading days) would incorrectly inflate the annualized Sharpe ratio by a factor of sqrt(365/252) ≈ 1.20"
+        },
+        {
+          "id": "d",
+          "text": "Annualized Sharpe is computed by multiplying the daily Sharpe ratio by 252 (not sqrt(252)), since both return and risk scale linearly with time"
+        },
+        {
+          "id": "e",
+          "text": "The Sharpe ratio does not require any annualization because it is already a dimensionless, scale-free ratio"
+        }
+      ],
+      "correctAnswers": ["a", "b", "c"],
+      "explanation": "(d) is wrong — multiplying by 252 instead of sqrt(252) would vastly overstate the Sharpe ratio; the correct scaling is sqrt(K) because volatility (denominator) scales with sqrt(T) while mean return (numerator) scales with T. (e) is wrong — while the Sharpe ratio is dimensionless, its magnitude depends on the measurement frequency; a daily Sharpe of 0.05 and an annual Sharpe of 0.79 represent the same strategy but would be compared incorrectly if not annualized to a common frequency."
     }
   ]
 }
