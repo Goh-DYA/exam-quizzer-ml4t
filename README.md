@@ -50,8 +50,6 @@ Then open [http://localhost:8080](http://localhost:8080) in your browser.
 | ML in Finance | 10 |
 | Projects (Martingale, Learners) | 12 |
 
-Exam 1 includes both multi-select and scenario-based question types.
-
 ## Exam 2 — Advanced ML4T (154 questions)
 
 | Topic | Count |
@@ -74,7 +72,6 @@ Exam 1 includes both multi-select and scenario-based question types.
 | ML for Execution (Microstructure) | 5 |
 | AI Infrastructure in Investments | 9 |
 
-Exam 2 is graduate-level, drawing from Mitchell's RL chapter, ISLP Ch. 10 (Deep Learning), the CFA Handbook of AI and Big Data, and the ML4T course materials on reinforcement learning, efficient markets, portfolio optimization, options, and generative AI.
 
 ## Scoring
 
@@ -84,6 +81,16 @@ Each question has exactly 5 options (a–e) and 1–4 correct answers. Two score
 - **Full-question correct** (secondary) — 1 point only when the user selects exactly the correct set
 
 The results screen shows both scores at the overall and per-topic level.
+
+## CSV Export
+
+A standalone Python script exports all questions from both exam banks into a single CSV file for offline review:
+
+```bash
+python export_qns.py
+```
+
+This produces `questions_export.csv` in the project root with columns: Exam, Topic, Difficulty, Question, Options, Correct Answers, Explanation, Source. 
 
 ## Tech Stack
 
